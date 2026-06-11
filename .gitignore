@@ -1,0 +1,26 @@
+# Jimeng browser session (contains login cookies — never commit)
+.jimeng-profile/
+jimeng-state.json
+jimeng-errors/
+
+# Provider task state
+video-tasks.json
+
+# Episode working assets (keep scripts/outlines in git, not media)
+episodes/*/assets/
+episodes/*/output/
+
+# Local secrets — never commit
+set-env.local.bat
+.env*
+
+# Test fixtures
+tests/fixture-episode/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db

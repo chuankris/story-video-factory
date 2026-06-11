@@ -2,59 +2,57 @@
 
 English | [中文](#中文)
 
-A Codex director skill for reviewed story-to-video production workflows targeting Douyin and similar short-video platforms.
+A skill pack (superpowers-style plugin) for reviewed story-to-video production targeting Douyin and similar short-video platforms.
 
-This skill coordinates the big picture: topic selection, outline review, script review, storyboard, prompt planning, provider routing, asset intake, composition, quality checks, and publishing packs.
+One director skill coordinates the pipeline; small specialized skills handle style, providers, composition, and publishing.
 
-It is designed to work with smaller specialized skills, such as a style skill for `初刻拍案惊奇`, a comic-video composer, Minimax media provider, Jimeng browser provider, and Douyin publishing pack.
+## Skills
 
-## What It Does
+| Skill | Purpose |
+| --- | --- |
+| `story-video-factory` | Director: workflow states, review gates, modes, provider routing |
+| `chuke-storytelling-video` | 初刻拍案惊奇 / 说书体 narration, 上中下集 episode workflow |
+| `jimeng-browser-provider` | Jimeng image generation via Playwright (no API exists) |
+| `minimax-media-provider` | MiniMax TTS + Hailuo video generation via API |
+| `gpt-image-provider` | GPT-image refs/key frames — **Codex environment only** |
+| `comic-video-composer` | FFmpeg composition: Ken Burns, subtitles, audio align, QC |
+| `douyin-publisher-pack` | Titles, cover text, captions, hashtags, risk review, checklist |
 
-- Manages production state and review gates.
-- Chooses between comic-video, image-comic, AI-video, and hybrid modes.
-- Routes tasks to available providers or future sub-skills.
-- Keeps provider-specific details out of the central workflow.
-- Prevents premature composition before assets are ready.
-- Supports parallel work while another episode is rendering or waiting on image generation.
-
-## Skill Structure
+## Structure
 
 ```text
 story-video-factory/
-  SKILL.md
-  agents/
-    openai.yaml
-  references/
-    output-spec.md
-    provider-routing.md
-    skill-map.md
-    workflow.md
+  .claude-plugin/
+    plugin.json
+    marketplace.json
+  skills/
+    story-video-factory/        # director
+    chuke-storytelling-video/
+    comic-video-composer/
+    minimax-media-provider/
+    jimeng-browser-provider/
+    gpt-image-provider/
+    douyin-publisher-pack/
 ```
 
-## Installation
+Each skill is a folder with `SKILL.md` plus optional `scripts/` and `references/`.
 
-Clone or copy this folder into your Codex skills directory:
-
-```bash
-git clone https://github.com/chuankris/story-video-factory.git ~/.codex/skills/story-video-factory
-```
-
-On Windows, copy or clone it under:
+## Installation (Claude Code)
 
 ```text
-%USERPROFILE%\.codex\skills\story-video-factory
+/plugin marketplace add chuankris/story-video-factory
+/plugin install story-video-factory@story-video-factory
 ```
 
-## Recommended Architecture
+## Setup
 
-Use this as the big director skill:
+- **MiniMax**: set `MINIMAX_API_KEY` and `MINIMAX_GROUP_ID` env vars.
+- **Jimeng**: `pip install playwright && playwright install chromium`, then `python skills/jimeng-browser-provider/scripts/jimeng_run.py login` and log in manually once.
+- **Composition**: `ffmpeg` on PATH.
 
-- `story-video-factory`: workflow, state, modes, provider routing.
-- `chuke-storytelling-video`: 初刻拍案惊奇 / classical storyteller style.
-- `comic-video-composer`: image-to-video composition.
-- `minimax-media-provider`: Minimax TTS and video generation.
-- `jimeng-browser-provider`: browser-assisted Jimeng image generation.
-- `douyin-publisher-pack`: title, cover, caption, tags, and publishing checklist.
+## Pipeline
+
+story source → outline → script (说书体) → storyboard → prompts → images (Jimeng/GPT-image) + TTS (MiniMax) [+ video shots (Hailuo)] → compose (FFmpeg) → QC → publishing pack. Every creative artifact passes human review before the next stage.
 
 ## Repository
 
@@ -64,61 +62,36 @@ GitHub: https://github.com/chuankris/story-video-factory
 
 # 中文
 
-[English](#story-video-factory) | 中文
+面向抖音等短视频平台的「故事转视频」skill 包（仿 superpowers 的插件结构）：一个导演 skill 管大流程，多个小 skill 各管一摊。
 
-这是一个面向抖音等短视频平台的 Codex 总控 skill，用来管理“故事到视频”的完整生产流程。
+## Skill 列表
 
-它不负责某一种具体文风或某一个供应商细节，而是负责大流程：选题、梗概审阅、脚本审阅、分镜、提示词规划、供应商路由、素材接收、合成、质检和发布包。
+| Skill | 职责 |
+| --- | --- |
+| `story-video-factory` | 导演：生产状态、审阅关卡、模式选择、供应商路由 |
+| `chuke-storytelling-video` | 初刻拍案惊奇 / 说书体文案，上中下集审阅流程 |
+| `jimeng-browser-provider` | 即梦无 API，用 Playwright 操作网页批量跑图、下载 |
+| `minimax-media-provider` | MiniMax 语音合成 + 海螺视频生成（API，需 key） |
+| `gpt-image-provider` | GPT-image 角色参考图/关键帧 —— **仅 Codex 环境可用** |
+| `comic-video-composer` | FFmpeg 本地合成：运镜、字幕、配音对齐、质检 |
+| `douyin-publisher-pack` | 标题、封面文案、简介、标签、风险检查、发布清单 |
 
-它适合和多个小 skill 配合使用，例如 `初刻拍案惊奇` 风格 skill、漫画转视频合成 skill、Minimax 媒体供应商 skill、即梦浏览器自动化 skill、抖音发布包 skill。
-
-## 能做什么
-
-- 管理生产状态和审阅关卡。
-- 在漫画视频、图文漫画、AI 视频、混合视频之间选择模式。
-- 根据现有工具和额度路由任务。
-- 把供应商细节拆到小 skill，避免总控 skill 变臃肿。
-- 防止在素材未完成时提前进入合成。
-- 在某一集渲染或跑图等待时，并行推进下一集的审阅工作。
-
-## Skill 结构
+## 安装（Claude Code）
 
 ```text
-story-video-factory/
-  SKILL.md
-  agents/
-    openai.yaml
-  references/
-    output-spec.md
-    provider-routing.md
-    skill-map.md
-    workflow.md
+/plugin marketplace add chuankris/story-video-factory
+/plugin install story-video-factory@story-video-factory
 ```
 
-## 安装
+## 使用前配置
 
-把本仓库 clone 或复制到 Codex skills 目录：
+- **MiniMax**：设置环境变量 `MINIMAX_API_KEY`、`MINIMAX_GROUP_ID`。
+- **即梦**：`pip install playwright && playwright install chromium`，首次运行 `jimeng_run.py login` 手动登录一次（会话保存在本地，不入库）。
+- **合成**：本机装好 `ffmpeg`。
 
-```bash
-git clone https://github.com/chuankris/story-video-factory.git ~/.codex/skills/story-video-factory
-```
+## 生产链路
 
-Windows 下通常放到：
-
-```text
-%USERPROFILE%\.codex\skills\story-video-factory
-```
-
-## 推荐架构
-
-把它作为大的导演 skill：
-
-- `story-video-factory`：流程、状态、模式、供应商路由。
-- `chuke-storytelling-video`：初刻拍案惊奇 / 古典说书体风格。
-- `comic-video-composer`：漫画图转视频合成。
-- `minimax-media-provider`：Minimax TTS 和视频生成。
-- `jimeng-browser-provider`：即梦浏览器辅助跑图。
-- `douyin-publisher-pack`：标题、封面、简介、标签和发布检查。
+选题 → 梗概 → 说书体脚本 → 分镜 → 提示词 → 跑图（即梦/GPT-image）+ 配音（MiniMax）[+ 高光动镜（海螺）] → 本地合成 → 质检 → 发布包。每个创作环节都先过人工审阅再进下一步。
 
 ## 仓库
 

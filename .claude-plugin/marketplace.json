@@ -1,0 +1,14 @@
+{
+  "name": "story-video-factory",
+  "owner": {
+    "name": "chuankris",
+    "email": "qiuxuechuan@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "story-video-factory",
+      "source": "./",
+      "description": "Story-to-video production skill pack for Douyin: director workflow, storyteller style, comic-video composition, Minimax media, Jimeng browser automation, and publishing packs."
+    }
+  ]
+}

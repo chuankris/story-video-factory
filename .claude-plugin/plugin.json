@@ -1,0 +1,21 @@
+{
+  "name": "story-video-factory",
+  "description": "Story-to-video production skill pack for Douyin: director workflow, classical storyteller style, comic-video composition, Minimax TTS/video, Jimeng browser automation, and publishing packs.",
+  "version": "0.2.0",
+  "author": {
+    "name": "chuankris",
+    "email": "qiuxuechuan@gmail.com"
+  },
+  "homepage": "https://github.com/chuankris/story-video-factory",
+  "repository": "https://github.com/chuankris/story-video-factory",
+  "license": "MIT",
+  "keywords": [
+    "douyin",
+    "short-video",
+    "comic-video",
+    "tts",
+    "storytelling",
+    "minimax",
+    "jimeng"
+  ]
+}
