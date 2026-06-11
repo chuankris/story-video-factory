@@ -13,7 +13,7 @@ Turn approved assets (panel images + per-segment TTS audio + script JSON) into `
 
 Refuse to compose (and say what is missing) unless these exist:
 
-- `script.json` — segments with `id` and `text` (see `chuke-storytelling-video` format).
+- `script.json` — canonical: `{"segments": [{"id", "text", ...}]}`. The loader also accepts legacy shapes — `{"lines": [...]}` (strings or dicts) and `{"scenes": [{"narration_lines": [...]}]}` — flattening them in order and auto-numbering ids 1..N. When ids are auto-assigned, image/audio files must be named by that order position.
 - `assets/images/` — one image per segment, named `<segment-id>.png/jpg` (a panel may be reused by listing it for several ids in a mapping file).
 - `assets/audio/` — one audio file per segment, named `<segment-id>.mp3/wav`.
 

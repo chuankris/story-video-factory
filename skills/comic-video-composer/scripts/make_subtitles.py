@@ -32,6 +32,51 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
 
 
+def normalize_segments(data):
+    """Accept any of the project's script schemas and return canonical segments.
+
+    Supported inputs:
+      {"segments": [{"id", "text", ...}]}          canonical
+      {"lines": ["text", ...]}                      bare strings
+      {"lines": [{"id"?, "text"|"line"|"narration"}]}
+      {"scenes": [{"narration_lines"|"lines": [...]}]}  flattened in order
+      [...]                                         top-level list, treated as lines
+    Missing ids are auto-assigned 1..N in order.
+    """
+    if isinstance(data, list):
+        raw = data
+    elif "segments" in data:
+        raw = data["segments"]
+    elif "lines" in data:
+        raw = data["lines"]
+    elif "scenes" in data:
+        raw = []
+        for scene in data["scenes"]:
+            raw.extend(scene.get("narration_lines") or scene.get("lines") or [])
+    else:
+        raise ValueError(
+            f"unrecognized script schema; top-level keys: {list(data)} "
+            "(expected segments / lines / scenes)")
+    segs = []
+    for i, item in enumerate(raw, 1):
+        if isinstance(item, str):
+            segs.append({"id": i, "text": item})
+            continue
+        text = item.get("text") or item.get("line") or item.get("narration")
+        if not text:
+            raise ValueError(f"segment {i} has no text field: {list(item)}")
+        seg = dict(item)
+        seg["id"] = item.get("id", i)
+        seg["text"] = text
+        segs.append(seg)
+    return segs
+
+
+def load_segments(episode: Path):
+    data = json.loads((episode / "script.json").read_text(encoding="utf-8"))
+    return normalize_segments(data)
+
+
 def audio_duration(path: Path) -> float:
     out = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries", "format=duration",
@@ -64,10 +109,10 @@ def ts(seconds: float) -> str:
 
 
 def build(episode: Path, out: Path) -> None:
-    script = json.loads((episode / "script.json").read_text(encoding="utf-8"))
+    segments = load_segments(episode)
     audio_dir = episode / "assets" / "audio"
     events, t = [], 0.0
-    for seg in script["segments"]:
+    for seg in segments:
         dur = audio_duration(find_audio(audio_dir, seg["id"])) + PAD
         events.append(
             f"Dialogue: 0,{ts(t)},{ts(t + dur - 0.1)},Narration,,0,0,0,,{wrap(seg['text'])}")

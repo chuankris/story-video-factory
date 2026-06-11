@@ -6,6 +6,7 @@ Usage:
 
 Expects inside <episode-dir>:
     script.json                 {"segments": [{"id": 1, "text": "...", "beat": "hook"}, ...]}
+                                (legacy {"lines": [...]} / {"scenes": [...]} also accepted)
     assets/images/<id>.png|jpg  one panel per segment (image_map.json may remap)
     assets/audio/<id>.mp3|wav   one narration clip per segment
 Optional:
@@ -84,7 +85,7 @@ def main():
     if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
         sys.exit("ffmpeg/ffprobe not found on PATH")
 
-    script = json.loads((ep / "script.json").read_text(encoding="utf-8"))
+    segments = make_subtitles.load_segments(ep)
     images, audio = ep / "assets" / "images", ep / "assets" / "audio"
     image_map = {}
     if (ep / "image_map.json").exists():
@@ -96,7 +97,7 @@ def main():
 
     # 1) per-segment clips
     clips = []
-    for i, seg in enumerate(script["segments"]):
+    for i, seg in enumerate(segments):
         sid = seg["id"]
         img = find_image(images, sid, image_map)
         aud = make_subtitles.find_audio(audio, sid)

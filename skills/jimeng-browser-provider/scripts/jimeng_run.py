@@ -59,11 +59,19 @@ def cmd_login(a):
     with sync_playwright() as pw:
         ctx, page = launch(pw, a.profile, headless=False)
         page.goto(SEL["url_generate"])
-        print("Browser opened. Log in manually, then close the browser window.")
+        print("Browser opened. Complete the login in the browser window.")
+        input(">> Log in, wait until the generate page is fully loaded, "
+              "then press Enter HERE to save the session... ")
         try:
-            page.wait_for_event("close", timeout=0)
-        except Exception:  # noqa: BLE001
-            pass
+            page.goto(SEL["url_generate"])
+            page.wait_for_load_state("networkidle")
+            if is_login_walled(page):
+                print("WARNING: still seeing a login wall — session may not be saved. "
+                      "Rerun login if generate fails.")
+            else:
+                print("Login session saved.")
+        except Exception as e:  # noqa: BLE001
+            print(f"WARNING: could not verify login state ({e}); session saved as-is.")
         ctx.close()
 
 

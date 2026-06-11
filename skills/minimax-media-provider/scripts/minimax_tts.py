@@ -20,6 +20,33 @@ from pathlib import Path
 HOST = os.environ.get("MINIMAX_API_HOST", "https://api.minimaxi.chat")
 
 
+def normalize_segments(data):
+    """Accept segments / lines / scenes schemas (kept in sync with
+    comic-video-composer's make_subtitles.normalize_segments)."""
+    if isinstance(data, list):
+        raw = data
+    elif "segments" in data:
+        raw = data["segments"]
+    elif "lines" in data:
+        raw = data["lines"]
+    elif "scenes" in data:
+        raw = []
+        for scene in data["scenes"]:
+            raw.extend(scene.get("narration_lines") or scene.get("lines") or [])
+    else:
+        sys.exit(f"unrecognized script schema; top-level keys: {list(data)}")
+    segs = []
+    for i, item in enumerate(raw, 1):
+        if isinstance(item, str):
+            segs.append({"id": i, "text": item})
+            continue
+        text = item.get("text") or item.get("line") or item.get("narration")
+        if not text:
+            sys.exit(f"segment {i} has no text field: {list(item)}")
+        segs.append({"id": item.get("id", i), "text": text})
+    return segs
+
+
 def env(name):
     v = os.environ.get(name)
     if not v:
@@ -61,7 +88,7 @@ def main():
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
 
-    segs = json.loads(a.script.read_text(encoding="utf-8"))["segments"]
+    segs = normalize_segments(json.loads(a.script.read_text(encoding="utf-8")))
     only = set(a.ids.split(",")) if a.ids else None
     a.outdir.mkdir(parents=True, exist_ok=True)
 
