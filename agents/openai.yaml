@@ -1,0 +1,4 @@
+interface:
+  display_name: "Story Video Factory"
+  short_description: "Orchestrate story-to-video workflows."
+  default_prompt: "Use this skill to plan, route, and manage a reviewed story video production workflow."
