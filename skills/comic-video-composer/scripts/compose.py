@@ -89,7 +89,7 @@ def main():
     images, audio = ep / "assets" / "images", ep / "assets" / "audio"
     image_map = {}
     if (ep / "image_map.json").exists():
-        image_map = json.loads((ep / "image_map.json").read_text(encoding="utf-8"))
+        image_map = json.loads((ep / "image_map.json").read_text(encoding="utf-8-sig"))
 
     out = ep / "output"
     segdir = out / "segments"

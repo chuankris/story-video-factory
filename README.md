@@ -46,7 +46,7 @@ Each skill is a folder with `SKILL.md` plus optional `scripts/` and `references/
 
 ## Setup
 
-- **MiniMax**: set `MINIMAX_API_KEY` and `MINIMAX_GROUP_ID` env vars.
+- **MiniMax**: set the `MINIMAX_API_KEY` env var (Bearer auth only; no GroupId needed). On Windows, `setx` only affects NEW processes — restart your terminal/Codex/Claude Code after setting it.
 - **Jimeng**: `pip install playwright && playwright install chromium`, then `python skills/jimeng-browser-provider/scripts/jimeng_run.py login` and log in manually once.
 - **Composition**: `ffmpeg` on PATH.
 
@@ -85,7 +85,7 @@ GitHub: https://github.com/chuankris/story-video-factory
 
 ## 使用前配置
 
-- **MiniMax**：设置环境变量 `MINIMAX_API_KEY`、`MINIMAX_GROUP_ID`。
+- **MiniMax**：设置环境变量 `MINIMAX_API_KEY` 即可（Bearer 鉴权，无需 GroupId）。注意 Windows 下 `setx` 只对**新开**的进程生效——设置后要重启终端/Codex/Claude Code。
 - **即梦**：`pip install playwright && playwright install chromium`，首次运行 `jimeng_run.py login` 手动登录一次（会话保存在本地，不入库）。
 - **合成**：本机装好 `ffmpeg`。
 

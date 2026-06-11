@@ -73,7 +73,7 @@ def normalize_segments(data):
 
 
 def load_segments(episode: Path):
-    data = json.loads((episode / "script.json").read_text(encoding="utf-8"))
+    data = json.loads((episode / "script.json").read_text(encoding="utf-8-sig"))
     return normalize_segments(data)
 
 

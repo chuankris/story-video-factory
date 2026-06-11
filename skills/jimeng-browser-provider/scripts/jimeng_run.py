@@ -21,7 +21,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 HERE = Path(__file__).parent
-SEL = json.loads((HERE / "selectors.json").read_text(encoding="utf-8"))
+SEL = json.loads((HERE / "selectors.json").read_text(encoding="utf-8-sig"))
 
 
 def first_visible(page, key, timeout=5000):
@@ -126,9 +126,9 @@ def generate_one(page, item, outdir: Path):
 
 
 def cmd_generate(a):
-    prompts = json.loads(Path(a.prompts).read_text(encoding="utf-8"))
+    prompts = json.loads(Path(a.prompts).read_text(encoding="utf-8-sig"))
     state_p = Path("jimeng-state.json")
-    state = json.loads(state_p.read_text(encoding="utf-8")) if state_p.exists() else {}
+    state = json.loads(state_p.read_text(encoding="utf-8-sig")) if state_p.exists() else {}
     outdir = Path(a.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
 

@@ -27,6 +27,24 @@ Defined in `scripts/make_subtitles.py` header. Key choices:
 [nar][duck]amix=inputs=2:duration=first[a]
 ```
 
+## 16:9 → 9:16 Conversion (for landscape AI-video clips)
+
+Minimax T2V outputs landscape only. Two recipes to fit a 16:9 clip into the 1080x1920 frame:
+
+Center crop (loses sides — only when subject is centered):
+
+```text
+-vf "crop=ih*9/16:ih,scale=1080:1920"
+```
+
+Blur-pad (keeps full frame, cinematic letterbox feel):
+
+```text
+-filter_complex "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=20:5[bg];[0:v]scale=1080:-2[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2"
+```
+
+Prefer requesting vertical clips at the source (image-to-video with 9:16 first frame) — conversion is the fallback.
+
 ## Common Failures
 
 - **zoompan jitter**: caused by zooming a small source; the script pre-scales 2x to avoid it. If still visible, pre-scale 3x.

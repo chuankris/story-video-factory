@@ -1,0 +1,27 @@
+{
+  "episode_id": "minguo-test-001",
+  "title": "雨夜当铺",
+  "mode": "image-comic",
+  "segments": [
+    {
+      "id": 1,
+      "beat": "hook",
+      "text": "民国雨夜，一个穷学生抱着祖传怀表，推开了巷口当铺的门。"
+    },
+    {
+      "id": 2,
+      "beat": "setup",
+      "text": "掌柜本想随手估价，可怀表一开，夹层里竟掉出一张旧照片。"
+    },
+    {
+      "id": 3,
+      "beat": "reveal",
+      "text": "照片上的女人，正是十年前北平失踪案里，再没找到的那个人。"
+    },
+    {
+      "id": 4,
+      "beat": "cliffhanger",
+      "text": "这时门铃又响，雨帘外站着的女人，和照片里一模一样。"
+    }
+  ]
+}

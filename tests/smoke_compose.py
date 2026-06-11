@@ -53,6 +53,19 @@ def check_adapter():
         assert all(s["text"] and s["id"] for s in segs)
     print("adapter ok: segments / lines(str) / lines(dict) / scenes all normalize to 3 segments")
 
+    # UTF-8 BOM tolerance: Notepad/PowerShell often write JSON with a BOM,
+    # which plain json.loads(utf-8 text) rejects. Loaders must use utf-8-sig.
+    bom_ep = ROOT / "tests" / "fixture-bom"
+    if bom_ep.exists():
+        shutil.rmtree(bom_ep)
+    bom_ep.mkdir(parents=True)
+    payload = json.dumps({"segments": SEGMENTS}, ensure_ascii=False).encode("utf-8")
+    (bom_ep / "script.json").write_bytes(b"\xef\xbb\xbf" + payload)
+    segs = make_subtitles.load_segments(bom_ep)
+    assert len(segs) == 3 and segs[0]["text"].startswith("一个大活人")
+    shutil.rmtree(bom_ep)
+    print("bom ok: script.json with UTF-8 BOM loads correctly")
+
 
 def build_fixture():
     if EP.exists():

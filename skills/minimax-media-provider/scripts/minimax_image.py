@@ -24,7 +24,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-HOST = os.environ.get("MINIMAX_API_HOST", "https://api.minimaxi.chat")
+HOST = os.environ.get("MINIMAX_API_HOST", "https://api.minimaxi.com")
 
 
 def env(name):
@@ -93,7 +93,7 @@ def main():
         print(f"ok: {names}")
         return
 
-    items = json.loads(a.prompts.read_text(encoding="utf-8"))
+    items = json.loads(a.prompts.read_text(encoding="utf-8-sig"))
     done = skipped = failed = 0
     for item in items:
         sid = str(item["id"])

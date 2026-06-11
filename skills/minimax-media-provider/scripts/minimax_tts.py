@@ -3,10 +3,10 @@
 
 Usage:
     python minimax_tts.py --script script.json --outdir assets/audio \
-        [--voice audiobook_male_1] [--model speech-2.8-hd] [--speed 1.0] \
+        [--voice male-qn-qingse] [--model speech-2.8-hd] [--speed 1.0] \
         [--ids 3,7] [--force]
 
-Env: MINIMAX_API_KEY, MINIMAX_GROUP_ID, optional MINIMAX_API_HOST.
+Env: MINIMAX_API_KEY, optional MINIMAX_API_HOST.
 Skips segments whose output file already exists unless --force.
 """
 import argparse
@@ -17,7 +17,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-HOST = os.environ.get("MINIMAX_API_HOST", "https://api.minimaxi.chat")
+HOST = os.environ.get("MINIMAX_API_HOST", "https://api.minimaxi.com")
 
 
 def normalize_segments(data):
@@ -55,7 +55,7 @@ def env(name):
 
 
 def tts(text, model, voice, speed):
-    url = f"{HOST}/v1/t2a_v2?GroupId={env('MINIMAX_GROUP_ID')}"
+    url = f"{HOST}/v1/t2a_v2"
     body = {
         "model": model,
         "text": text,
@@ -82,13 +82,13 @@ def main():
     ap.add_argument("--script", required=True, type=Path)
     ap.add_argument("--outdir", required=True, type=Path)
     ap.add_argument("--model", default="speech-2.8-hd")
-    ap.add_argument("--voice", default="audiobook_male_1")
+    ap.add_argument("--voice", default="male-qn-qingse")
     ap.add_argument("--speed", type=float, default=1.0)
     ap.add_argument("--ids", default=None, help="comma-separated segment ids to (re)generate")
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
 
-    segs = normalize_segments(json.loads(a.script.read_text(encoding="utf-8")))
+    segs = normalize_segments(json.loads(a.script.read_text(encoding="utf-8-sig")))
     only = set(a.ids.split(",")) if a.ids else None
     a.outdir.mkdir(parents=True, exist_ok=True)
 

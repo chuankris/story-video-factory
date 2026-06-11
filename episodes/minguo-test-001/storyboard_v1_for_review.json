@@ -1,0 +1,30 @@
+{
+  "episode_id": "minguo-test-001",
+  "layout": "vertical_4_panel_comic",
+  "panels": [
+    {
+      "id": 1,
+      "segment_id": 1,
+      "visual": "雨夜北平胡同，当铺门口挂着昏黄灯笼，穿旧长衫的穷学生抱着怀表推门，雨水从伞沿滴落。",
+      "camera": "wide establishing panel"
+    },
+    {
+      "id": 2,
+      "segment_id": 2,
+      "visual": "当铺柜台内，老掌柜戴圆眼镜打开银色怀表，暗格弹开，一张泛黄照片滑到桌面。",
+      "camera": "medium shot with object focus"
+    },
+    {
+      "id": 3,
+      "segment_id": 3,
+      "visual": "照片特写：民国旗袍女子端坐，照片边角写着十年前日期；掌柜的手指微微发抖。",
+      "camera": "close-up reveal"
+    },
+    {
+      "id": 4,
+      "segment_id": 4,
+      "visual": "当铺门外雨帘中，一个穿深色旗袍的女人静静站着，脸与照片一致，店内二人惊恐回头。",
+      "camera": "dramatic final panel"
+    }
+  ]
+}

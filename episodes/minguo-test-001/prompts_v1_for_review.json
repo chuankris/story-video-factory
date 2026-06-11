@@ -1,0 +1,28 @@
+{
+  "episode_id": "minguo-test-001",
+  "provider_plan": {
+    "mode": "image-comic",
+    "recommended_provider": "gpt-image",
+    "reason": "single four-panel concept test; good for validating visual direction before provider automation"
+  },
+  "global_style": "民国悬疑漫画，竖版四格，电影感构图，雨夜，老北平胡同，当铺，钨丝灯暖光与冷雨蓝灰对比，细腻线稿，半写实国风漫画，纸张颗粒，低饱和，高氛围感",
+  "negative": "现代城市，高楼，手机，汽车，霓虹赛博朋克，西式奇幻，血腥，夸张恐怖脸，低清晰度，水印，logo，乱码文字",
+  "panels": [
+    {
+      "id": 1,
+      "prompt": "雨夜北平胡同，当铺门口挂着昏黄灯笼，穿旧长衫的穷学生抱着祖传怀表推门，雨水从伞沿滴落，民国悬疑漫画，电影感"
+    },
+    {
+      "id": 2,
+      "prompt": "当铺柜台内，老掌柜戴圆眼镜打开银色怀表，暗格弹开，一张泛黄照片滑到桌面，暖黄灯光，人物神情紧张"
+    },
+    {
+      "id": 3,
+      "prompt": "泛黄老照片特写，民国旗袍女子端坐，照片边角有模糊旧日期感，掌柜手指微微发抖，悬疑物件特写"
+    },
+    {
+      "id": 4,
+      "prompt": "当铺门外雨帘中，一个穿深色旗袍的女人静静站着，脸与照片中的女子相似，店内学生和掌柜惊恐回头，强反转结尾"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ Usage:
         [--tasks video-tasks.json] [--outdir assets/video]
     python minimax_video.py poll [--tasks video-tasks.json] [--outdir assets/video]
 
-Env: MINIMAX_API_KEY, optional MINIMAX_GROUP_ID (file retrieval), MINIMAX_API_HOST.
+Env: MINIMAX_API_KEY, optional MINIMAX_API_HOST.
 Tasks are tracked in a local JSON file so polling survives restarts.
 """
 import argparse
@@ -20,7 +20,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-HOST = os.environ.get("MINIMAX_API_HOST", "https://api.minimaxi.chat")
+HOST = os.environ.get("MINIMAX_API_HOST", "https://api.minimaxi.com")
 
 
 def env(name, required=True):
@@ -46,7 +46,7 @@ def api(method, path, body=None):
 
 
 def load_tasks(p: Path):
-    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else []
+    return json.loads(p.read_text(encoding="utf-8-sig")) if p.exists() else []
 
 
 def save_tasks(p: Path, tasks):
@@ -63,7 +63,12 @@ def submit(a):
     resp = api("POST", "/v1/video_generation", body)
     task_id = resp["task_id"]
     tasks = load_tasks(a.tasks)
-    tasks.append({"task_id": task_id, "prompt": a.prompt[:80],
+    tasks.append({"task_id": task_id,
+                  "prompt": a.prompt,            # full text — needed to reproduce
+                  "prompt_preview": a.prompt[:60],
+                  "model": a.model, "duration": a.duration,
+                  "resolution": a.resolution,
+                  "first_frame": a.image or None,
                   "submitted": time.strftime("%Y-%m-%d %H:%M:%S"),
                   "status": "pending"})
     save_tasks(a.tasks, tasks)
@@ -82,17 +87,13 @@ def poll(a):
     if not pending:
         print("no pending tasks")
         return
-    group = env("MINIMAX_GROUP_ID", required=False)
     for t in pending:
         resp = api("GET", f"/v1/query/video_generation?task_id={t['task_id']}")
         status = resp.get("status")
         print(f"{t['task_id']}: {status}")
         if status == "Success":
             file_id = resp["file_id"]
-            q = f"/v1/files/retrieve?file_id={file_id}"
-            if group:
-                q += f"&GroupId={group}"
-            url = api("GET", q)["file"]["download_url"]
+            url = api("GET", f"/v1/files/retrieve?file_id={file_id}")["file"]["download_url"]
             dest = a.outdir / f"{t['task_id']}.mp4"
             download(url, dest)
             t["status"] = "done"

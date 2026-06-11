@@ -9,9 +9,8 @@ description: Generate narration TTS audio, images, and AI video clips through th
 
 Environment variables (never hardcode, never print):
 
-- `MINIMAX_API_KEY` — required.
-- `MINIMAX_GROUP_ID` — required for TTS.
-- `MINIMAX_API_HOST` — optional; defaults to `https://api.minimaxi.chat` (mainland). Use `https://api.minimax.io` for the global platform.
+- `MINIMAX_API_KEY` — required. Bearer auth is all the API needs.
+- `MINIMAX_API_HOST` — optional; defaults to `https://api.minimaxi.com` (mainland). Use `https://api.minimax.io` for the global platform.
 
 If a variable is missing, stop and ask the user to set it; do not invent values.
 
@@ -28,11 +27,13 @@ If a variable is missing, stop and ask the user to set it; do not invent values.
 3. Output: `<id>.mp3` per segment.
 4. Spot-check: play/probe 2-3 files; wrong pronunciation → fix the script text (homophone rewrite per the chuke style guide), not the voice settings, then regenerate only those ids with `--ids`.
 
-Default voice settings live at the top of the script (model `speech-2.8-hd`, a male storyteller voice, speed 1.0). Change via CLI flags; record the chosen voice in the episode dir so all episodes of one IP sound identical.
+Default voice settings live in the script's CLI defaults (model `speech-2.8-hd`, voice `male-qn-qingse`, speed 1.0). Change via CLI flags; record the chosen voice in the episode dir so all episodes of one IP sound identical.
 
 ## Video Workflow (async)
 
-1. Confirm with user: shot description, duration, model, today's remaining quota.
+**Douyin needs 9:16, but text-to-video only outputs 16:9 landscape** (no aspect parameter exists). Default to image-to-video: pass a 9:16 panel via `--image` and the output follows its ratio. Only use pure T2V when no suitable panel exists, and plan the 16:9→9:16 conversion (composer has crop/blur-pad recipes) with a centered subject.
+
+1. Confirm with user: shot description, duration, model, today's remaining quota — and how 9:16 will be achieved (first-frame image vs post-crop).
 2. Submit: `scripts/minimax_video.py submit --prompt "..." [--image first_frame.png] [--model MiniMax-Hailuo-02]` → prints `task_id`, saved to `video-tasks.json`.
 3. Poll: `scripts/minimax_video.py poll` — checks all pending tasks, downloads finished videos to `assets/video/<task_id>.mp4`.
 4. While waiting (minutes), continue other review-safe work; do not block.
