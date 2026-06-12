@@ -49,6 +49,7 @@ Each skill is a folder with `SKILL.md` plus optional `scripts/` and `references/
 - **MiniMax**: set the `MINIMAX_API_KEY` env var (Bearer auth only; no GroupId needed). On Windows, `setx` only affects NEW processes — restart your terminal/Codex/Claude Code after setting it.
 - **Jimeng**: `pip install playwright && playwright install chromium`, then `python skills/jimeng-browser-provider/scripts/jimeng_run.py login` and log in manually once.
 - **Composition**: `ffmpeg` on PATH.
+- **Windows terminals**: run `chcp 65001` before inspecting files/output — the default GBK codepage displays UTF-8 Chinese as mojibake (the files themselves are fine).
 
 ## Pipeline
 
@@ -88,6 +89,7 @@ GitHub: https://github.com/chuankris/story-video-factory
 - **MiniMax**：设置环境变量 `MINIMAX_API_KEY` 即可（Bearer 鉴权，无需 GroupId）。注意 Windows 下 `setx` 只对**新开**的进程生效——设置后要重启终端/Codex/Claude Code。
 - **即梦**：`pip install playwright && playwright install chromium`，首次运行 `jimeng_run.py login` 手动登录一次（会话保存在本地，不入库）。
 - **合成**：本机装好 `ffmpeg`。
+- **Windows 终端**：查看文件或脚本输出前先 `chcp 65001`，否则默认 GBK 代码页会把 UTF-8 中文显示成乱码（文件本身是好的）。
 
 ## 生产链路
 

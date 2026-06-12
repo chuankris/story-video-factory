@@ -6,7 +6,7 @@ When `jimeng_run.py` fails with "not found — update selectors.json":
 
 1. Open `jimeng-errors/<id>_<ts>.png` to see what the page actually looked like.
 2. Run `jimeng_run.py login` to get a headed browser; navigate to the generate page.
-3. DevTools → inspect the element → derive a stable selector. Prefer text selectors (`button:has-text('生成')`) and attribute fragments (`[class*='prompt']`) over full hashed class names, which change every deploy.
+3. DevTools → inspect the element → derive a stable selector. Prefer text selectors (`button:has-text('生成')`), role/state attributes (`[contenteditable='true'][role='textbox']`), and attribute fragments (`[class*='submit-butt']`) over full hashed class names, which change every deploy. Note the prompt editor is ProseMirror contenteditable — there is no textarea, and text must be typed via keyboard insertion (`set_prompt` in jimeng_run.py handles this).
 4. Edit `scripts/selectors.json` (candidates are tried in order — put the new one first, keep old as fallback).
 5. Rerun `generate`; completed ids skip automatically.
 

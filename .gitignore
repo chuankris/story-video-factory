@@ -1,7 +1,14 @@
 # Jimeng browser session (contains login cookies — never commit)
-.jimeng-profile/
+.jimeng-profile*/
 jimeng-state.json
+*.jimeng-state.json
 jimeng-errors/
+
+# Local test artifacts inside episodes
+episodes/*/jimeng-test/
+episodes/*/jimeng-video-test/
+episodes/*/tmp/
+episodes/*/runs/
 
 # Provider task state
 video-tasks.json

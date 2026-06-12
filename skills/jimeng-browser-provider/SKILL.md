@@ -30,9 +30,11 @@ Keep `.jimeng-profile/` out of git (contains session cookies) — it is in the r
 2. Confirm with the user: number of prompts × credits each ≈ total credit spend this run.
 3. Run: `python scripts/jimeng_run.py generate --profile .jimeng-profile --prompts prompts.json --outdir assets/images-raw/`
    - Headed mode by default — the user can watch and abort.
-   - The script submits each prompt, waits for results, downloads all candidate images as `<id>_a.png`, `<id>_b.png`, ...
-   - State is checkpointed to `jimeng-state.json`; rerunning skips completed ids.
-4. Selection: show the user candidates per panel; copy the chosen one to `assets/images/<id>.png`. Never auto-pick — composition quality lives or dies here.
+   - The script verifies the prompt landed intact in the editor (CJK input can silently corrupt — it aborts before spending credits if so), submits, waits, and downloads result images (`<id>_a.png`, ...) detected by CDN domain + rendered size, not fragile container selectors.
+   - State is per-batch: `<prompts-stem>.jimeng-state.json` next to the prompts file (`--state` to override). Each entry tracks `pending → submitted → confirmed → downloaded / failed` plus the `workspace_url`. Rerunning skips downloaded ids.
+4. Video: add `--video`. Two differences from images: a credit-cost confirm dialog (继续生成) must be clicked — nothing is spent until then — and results live in hidden `<video>` tags detected by URL markers.
+5. Slow renders: if a run times out, the workspace URL is saved; `python scripts/jimeng_run.py resume --prompts ... --outdir ...` reopens it later and downloads finished results at zero cost.
+6. Selection: show the user candidates per panel; copy the chosen one to `assets/images/<id>.png`. Never auto-pick — composition quality lives or dies here.
 
 ## Failure Handling
 
@@ -45,6 +47,12 @@ Keep `.jimeng-profile/` out of git (contains session cookies) — it is in the r
 
 - `scripts/jimeng_run.py` — `login` and `generate` subcommands. Requires `playwright`.
 - `scripts/selectors.json` — CSS/text selectors for the Jimeng UI; the only file to touch when the site changes.
+
+UI facts the scripts rely on (verified 2026-06): `/ai-tool/image/generate` redirects to `/ai-tool/home`, where the 图片生成/视频生成 mode card must be clicked; the prompt box is a contenteditable ProseMirror editor (no `<textarea>`); `class*=submit-butt` matches multiple buttons of which some are hidden — the script picks the first visible+enabled match, never `.first`; after submit the page moves to `/ai-tool/generate?workspace=...` where results render; real images come from `dreamina-sign.byteimg.com`; real videos sit in non-visible `<video>` tags with `vlabvod.com` / `mime_type=video_mp4` URLs (the loading animation is also an mp4 — excluded by `record-loading-animation`).
+
+## Smoke Test (no credits)
+
+`python tests/smoke_jimeng.py` (repo root) opens the site with a fresh logged-out profile and asserts the login wall is detected — proving generate would stop before spending credits. Run it after any selectors.json update.
 
 ## References
 
