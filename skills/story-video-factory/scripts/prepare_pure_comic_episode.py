@@ -18,7 +18,12 @@ _SCRIPTS = Path(__file__).parent
 
 
 def _import_script(name: str):
-    spec = importlib.util.spec_from_file_location(name, _SCRIPTS / f"{name}.py")
+    script_path = _SCRIPTS / f"{name}.py"
+    if not script_path.exists():
+        sys.exit(f"ERROR: required script not found: {script_path}")
+    spec = importlib.util.spec_from_file_location(name, script_path)
+    if spec is None or spec.loader is None:
+        sys.exit(f"ERROR: could not load script: {script_path}")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
