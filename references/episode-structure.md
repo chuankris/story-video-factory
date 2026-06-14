@@ -18,6 +18,7 @@ episodes/<episode-id>/
   visual-bible.md
   quota-log.md
   prompt-rewrites.md
+  caption-layout.json       # optional: manual line breaks per panel
   assets/
     refs/
     images-raw/
@@ -101,6 +102,27 @@ Example:
 `prompt-rewrites.md`:
 
 - failed prompt reasons and revisions.
+
+`caption-layout.json` (optional):
+
+- Per-episode manual line-break config for caption cards.
+- Each entry is either a list of lines or an object with `lines` and optional `source`.
+- The joined text of each entry must equal the matching `script.json` segment text — the render script enforces this hard.
+- Do not use this file to change caption wording — only to control how lines break visually.
+
+## Post-Production Scripts
+
+These scripts live in `skills/story-video-factory/scripts/`. Run from the project root.
+
+| Script | Purpose |
+|--------|---------|
+| `render_lettered_panels.py <episode>` | Batch-render captioned panels from raw assets into `assets/images/` |
+| `build_publish_carousel.py <episode>` | Copy final images to numbered `output/publish/carousel/` folder |
+| `generate_qc_report.py <episode>` | Generate QC report skeleton with auto-filled objective fields |
+| `generate_publish_pack.py <episode>` | Generate publish pack draft (titles, cover text, hashtags) |
+| `prepare_pure_comic_episode.py <episode>` | Orchestrate all four steps in order |
+
+All scripts accept `--help`. The orchestrator accepts `--skip-render`, `--skip-carousel`, `--skip-qc`, `--skip-pack`, `--contact-sheet`, `--force`.
 
 ## Naming
 

@@ -31,12 +31,12 @@ Do not skip from script ideas to video generation unless the user explicitly ask
 
 Choose one mode before routing providers:
 
-- `comic-video`: static comic images plus narration, subtitles, camera motion, and music.
-- `image-comic`: still images or panels intended for image posts or comic posts.
-- `ai-video`: generated video clips assembled into a short video.
-- `hybrid`: comic images for normal beats, generated video for hook/reveal/high-impact shots.
+- `pure_comic`: static comic panel carousel, post-rendered captions, no audio or video.
+- `comic_to_video`: approved pure comic images plus narration, subtitles, and camera motion.
+- `direct_video`: generated video clips (Hailuo/MiniMax) assembled into a short video.
+- `hybrid`: comic images for most beats, generated video for hook/reveal shots.
 
-Prefer `comic-video` for stable daily production. Use `hybrid` when limited video-generation quota should be saved for important shots.
+Prefer `pure_comic` for stable daily production. Use `hybrid` when limited video-generation quota should be saved for important shots.
 
 ## Sub-Skill Routing
 
@@ -69,3 +69,17 @@ Load only what is needed:
 - Save review artifacts with version suffixes before replacing accepted files.
 - Separate style, provider, and composition concerns so the factory can support many story IPs.
 - When waiting on rendering or asset generation, move another episode forward only through review-safe steps.
+
+## Post-Production (Pure Comic)
+
+After final assets are selected, run the packaging scripts rather than doing these steps manually:
+
+```
+python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode>
+```
+
+- Caption text comes from `script.json` only. The render script enforces this — mismatched `caption-layout.json` causes a hard exit.
+- `output/publish/carousel/` is the Douyin upload folder, not `assets/images/`.
+- QC report auto-fills objective fields (resolution, ratio, size); subjective fields require human review.
+- Publish pack is a template — always edit titles and cover text before uploading.
+- Sub-skill routing for post-production: `story-video-factory/scripts/` handles render, carousel, QC, and publish pack generation.
