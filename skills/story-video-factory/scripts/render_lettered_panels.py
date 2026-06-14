@@ -37,7 +37,13 @@ def load_script(episode: Path) -> dict[str, str]:
     raw = (episode / "script.json").read_text(encoding="utf-8-sig")
     data = json.loads(raw)
     segments = data.get("segments", data if isinstance(data, list) else [])
-    return {seg["id"]: seg["text"] for seg in segments}
+    result = {}
+    for seg in segments:
+        try:
+            result[seg["id"]] = seg["text"]
+        except KeyError:
+            print(f"WARNING: skipping malformed segment in script.json: {seg}")
+    return result
 
 
 def load_caption_layout(episode: Path) -> dict[str, dict]:
@@ -127,7 +133,8 @@ def render_panel(
     small = make_font(22)
 
     # Card shadow
-    card_w, card_h = 900, 166
+    card_w = 900
+    card_h = max(166, 28 + len(lines) * 48 + 20)
     card_x = (W - card_w) // 2
     card_y = H - 238
     shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -164,7 +171,7 @@ def render_panel(
     )
 
     out.parent.mkdir(parents=True, exist_ok=True)
-    base.convert("RGB").save(out, quality=96)
+    base.convert("RGB").save(out)
     return out
 
 
@@ -177,6 +184,8 @@ def process_episode(episode: Path, only_panel: str | None = None, dry_run: bool 
 
     panel_ids = list(scripts.keys())
     if only_panel:
+        if only_panel not in scripts:
+            sys.exit(f"ERROR: panel id '{only_panel}' not found in script.json")
         panel_ids = [only_panel]
 
     errors = 0
