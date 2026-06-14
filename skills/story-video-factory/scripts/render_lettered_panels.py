@@ -220,8 +220,9 @@ def process_episode(episode: Path, only_panel: str | None = None, dry_run: bool 
 
         out = render_panel(episode, panel_id, script_text, lines, source, dry_run=dry_run)
         if not dry_run:
-            img = Image.open(out)
-            print(f"  {panel_id}: {out.name}  {img.size}  {out.stat().st_size // 1024} KB")
+            with Image.open(out) as img:
+                size = img.size
+            print(f"  {panel_id}: {out.name}  {size}  {out.stat().st_size // 1024} KB")
 
     if errors:
         print(f"\n{errors} panel(s) skipped due to missing sources.")

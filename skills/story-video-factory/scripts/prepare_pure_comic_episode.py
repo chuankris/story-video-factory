@@ -41,7 +41,8 @@ def build_contact_sheet(episode: Path) -> None:
     for pid in panel_ids:
         src = images_dir / f"{pid}.png"
         if src.exists():
-            img = Image.open(src).convert("RGB")
+            with Image.open(src) as raw:
+                img = raw.convert("RGB")
             img.thumbnail((216, 384), Image.Resampling.LANCZOS)
             thumbs.append(img)
 
