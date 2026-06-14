@@ -22,7 +22,10 @@ def load_json(path: Path) -> dict:
 
 def find_raw_source(episode: Path, panel_id: str) -> str:
     candidates = sorted((episode / "assets" / "images-raw").glob(f"{panel_id}_*.png"))
-    return str(candidates[0].relative_to(episode)) if candidates else "unknown"
+    if not candidates:
+        print(f"  WARNING: no raw source found for {panel_id} in assets/images-raw/")
+        return "unknown"
+    return str(candidates[0].relative_to(episode))
 
 
 def panel_section(episode: Path, panel_id: str, provider: str) -> str:
@@ -30,9 +33,12 @@ def panel_section(episode: Path, panel_id: str, provider: str) -> str:
     if not final.exists():
         return f"## {panel_id}\n\nFile: MISSING\n\n"
 
-    with Image.open(final) as img:
-        w, h = img.size
-    size_kb = final.stat().st_size // 1024
+    try:
+        with Image.open(final) as img:
+            w, h = img.size
+    except Exception as e:
+        return f"## {panel_id}\n\nFile: `assets/images/{panel_id}.png`\nERROR reading image: {e}\n\n"
+    size_kb = round(final.stat().st_size / 1024, 1)
     is_916 = "pass" if w * 16 == h * 9 else "FAIL"
     res_pass = "pass" if h >= 1920 else "FAIL"
     source = find_raw_source(episode, panel_id)
@@ -89,7 +95,12 @@ Carousel decision: # TODO: ready / needs-reorder / needs-rerun
 def generate_report(episode: Path, force: bool = False) -> None:
     meta = load_json(episode / "episode-meta.json")
     script_data = load_json(episode / "script.json")
-    segments = script_data.get("segments", script_data if isinstance(script_data, list) else [])
+    segments = script_data.get("segments")
+    if segments is None:
+        if isinstance(script_data, list):
+            segments = script_data
+        else:
+            sys.exit("ERROR: script.json has no 'segments' key and is not a list.")
     panel_ids = [seg["id"] for seg in segments]
 
     provider = meta.get("provider_plan", {}).get("production_panels", "unknown")
