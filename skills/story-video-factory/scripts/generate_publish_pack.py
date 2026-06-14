@@ -18,6 +18,115 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
+def _clauses(text: str) -> list[str]:
+    """Split text on CJK punctuation, return non-empty stripped clauses."""
+    result = []
+    current = ""
+    for ch in text:
+        current += ch
+        if ch in "，。！？、；":
+            c = current.rstrip("，。！？、；").strip()
+            if c:
+                result.append(c)
+            current = ""
+    if current.strip():
+        result.append(current.strip())
+    return result
+
+
+def derive_titles(title: str, texts: dict[str, str], panel_ids: list[str]) -> list[str]:
+    """Generate 5 real title candidates from episode data. All ≤20 chars."""
+    options: list[str] = [title]
+
+    # Option 2: key clause from last panel (the emotional payoff)
+    if panel_ids:
+        last = texts.get(panel_ids[-1], "")
+        for c in reversed(_clauses(last)):
+            if 4 <= len(c) <= 20 and c != title:
+                options.append(c)
+                break
+        if len(options) == 1 and last:
+            options.append(last[:20].rstrip("，。！？"))
+
+    # Option 3: first clause of first panel (the hook)
+    if panel_ids:
+        first = texts.get(panel_ids[0], "")
+        for c in _clauses(first):
+            if 4 <= len(c) <= 20 and c not in options:
+                options.append(c)
+                break
+        if len(options) == 2 and first:
+            options.append(first[:20].rstrip("，。！？"))
+
+    # Option 4: contracted title (drop first 2 chars if title is long)
+    if len(title) > 8:
+        contracted = title[2:]
+        if 5 <= len(contracted) <= 20 and contracted not in options:
+            options.append(contracted)
+    if len(options) == 3:
+        options.append(title + "的故事" if len(title) <= 16 else title[-10:])
+
+    # Option 5: key clause from middle panel
+    if panel_ids and len(panel_ids) >= 3:
+        mid_text = texts.get(panel_ids[len(panel_ids) // 2], "")
+        for c in _clauses(mid_text):
+            if 4 <= len(c) <= 20 and c not in options:
+                options.append(c)
+                break
+    if len(options) < 5:
+        # Pad with last-panel full first 20 chars if still short
+        last = texts.get(panel_ids[-1], "") if panel_ids else ""
+        if last and last[:18] not in options:
+            options.append(last[:18].rstrip("，。！？"))
+
+    # Deduplicate preserving order
+    seen: set[str] = set()
+    unique: list[str] = []
+    for o in options:
+        if o not in seen:
+            seen.add(o)
+            unique.append(o)
+
+    return unique[:5]
+
+
+def derive_covers(title: str, texts: dict[str, str], panel_ids: list[str]) -> list[tuple[str, str]]:
+    """Generate 3 cover text candidates (main ≤8 chars, subtitle ≤10 chars)."""
+    covers: list[tuple[str, str]] = []
+
+    # Option 1: natural split of the title
+    split = min(6, len(title) // 2 + 1)
+    main1, sub1 = title[:split], title[split:]
+    covers.append((main1[:8], sub1[:10]))
+
+    # Option 2: key phrase from last panel
+    if panel_ids:
+        last = texts.get(panel_ids[-1], "")
+        last_clauses = _clauses(last)
+        if len(last_clauses) >= 2:
+            main2 = last_clauses[-1][:8]
+            sub2 = last_clauses[-2][:10]
+            covers.append((main2, sub2))
+        elif last_clauses:
+            main2 = last_clauses[0][:8]
+            covers.append((main2, last[len(last_clauses[0]):].rstrip("，。！？")[:10]))
+
+    # Option 3: from first panel
+    if panel_ids:
+        first = texts.get(panel_ids[0], "")
+        first_clauses = _clauses(first)
+        if first_clauses:
+            main3 = first_clauses[0][:8]
+            sub3 = first_clauses[1][:10] if len(first_clauses) > 1 else ""
+            if (main3, sub3) not in covers:
+                covers.append((main3, sub3))
+
+    while len(covers) < 3:
+        covers.append((f"（主线{len(covers)+1}）", f"（副线{len(covers)+1}）"))
+
+    return covers[:3]
+
+
 def generate_pack(episode: Path, force: bool = False) -> None:
     meta = load_json(episode / "episode-meta.json")
     script_data = load_json(episode / "script.json")
@@ -36,6 +145,9 @@ def generate_pack(episode: Path, force: bool = False) -> None:
     episode_id = meta.get("episode_id", episode.name)
     first_text = texts.get(panel_ids[0], "") if panel_ids else ""
     last_text = texts.get(panel_ids[-1], "") if panel_ids else ""
+
+    title_options = derive_titles(title, texts, panel_ids)
+    cover_options = derive_covers(title, texts, panel_ids)
 
     # Carousel file list
     carousel_dir = episode / "output" / "publish" / "carousel"
@@ -63,13 +175,9 @@ Images: `output/publish/carousel/`
 
 > Edit these. Keep ≤20 characters. Pick one before uploading.
 
-1. {title}
-2. # TODO: 悬念问句 variant (e.g. 她把星星缝在背包上，多年后才明白为什么)
-3. # TODO: 反差陈述 variant (e.g. 她嫌妈妈唠叨，后来却把那颗星星带去了远方)
-4. # TODO: 情感钩子 variant based on last panel: {last_text[:20]}
-5. # TODO: 5th option
+{chr(10).join(f"{i+1}. {opt}" for i, opt in enumerate(title_options))}
 
-Recommended: `{title}`
+Recommended: `{title_options[0]}`
 
 ---
 
@@ -77,12 +185,7 @@ Recommended: `{title}`
 
 > ≤8 chars main + ≤10 chars subtitle. Must be readable at thumbnail size.
 
-1. 主线:（替换为8字以内）
-   副线:（替换为10字以内）
-
-2. # TODO: option 2
-
-3. # TODO: option 3
+{chr(10).join(f"{i+1}. 主线: {m}\\n   副线: {s}" for i, (m, s) in enumerate(cover_options))}
 
 Recommended cover image: first panel `01-{panel_ids[0] if panel_ids else "p001"}.png` or strongest emotional panel.
 
@@ -93,9 +196,7 @@ Recommended cover image: first panel `01-{panel_ids[0] if panel_ids else "p001"}
 > 2-4 lines: hook → context → interaction prompt → hashtags.
 > Edit to match your voice before posting.
 
-{first_text[:30] if first_text else "# TODO: opening hook"}
-
-# TODO: 1-2 lines of context or emotional resonance.
+{last_text[:40].rstrip("，。！？") if last_text else first_text[:40].rstrip("，。！？") if first_text else title}
 
 你有没有一件小事，长大后才懂它的意义？评论区聊聊。
 

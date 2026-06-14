@@ -4,6 +4,11 @@ Usage:
     python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir>
     python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir> --skip-render --force
     python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir> --contact-sheet
+    python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir> --force-render
+
+By default the render step SKIPS panels that already have a final image in assets/images/.
+Pass --force-render to overwrite existing finals (source must be configured in
+selected-candidates.json or caption-layout.json).
 """
 
 from __future__ import annotations
@@ -74,7 +79,12 @@ def main() -> None:
     parser.add_argument("--skip-qc", action="store_true", help="Skip QC report generation")
     parser.add_argument("--skip-pack", action="store_true", help="Skip publish pack generation")
     parser.add_argument("--contact-sheet", action="store_true", help="Also generate contact sheet")
-    parser.add_argument("--force", action="store_true", help="Pass --force to all sub-steps")
+    parser.add_argument("--force", action="store_true", help="Pass --force to carousel/QC/pack sub-steps")
+    parser.add_argument(
+        "--force-render",
+        action="store_true",
+        help="Overwrite existing final panel images during render (requires source configured)",
+    )
     args = parser.parse_args()
 
     episode = Path(args.episode)
@@ -87,8 +97,10 @@ def main() -> None:
 
     if not args.skip_render:
         print("── Step 1: Render caption panels ──")
+        if not args.force_render:
+            print("  (existing finals protected — pass --force-render to overwrite)")
         renderer = _import_script("render_lettered_panels")
-        renderer.process_episode(episode)
+        renderer.process_episode(episode, force_render=args.force_render)
         print()
 
     if not args.skip_carousel:

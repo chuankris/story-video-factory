@@ -46,6 +46,9 @@ def minimal_episode(tmp_path):
     raw_dir.mkdir(parents=True)
     for pid in ("p001", "p002"):
         Image.new("RGB", (1080, 1920), color=(200, 180, 150)).save(raw_dir / f"{pid}_001.png")
+    # Map approved sources so render_lettered_panels can proceed
+    selected = {"p001": "assets/images-raw/p001_001.png", "p002": "assets/images-raw/p002_001.png"}
+    (ep / "selected-candidates.json").write_text(json.dumps(selected, ensure_ascii=False), encoding="utf-8")
     return ep
 
 

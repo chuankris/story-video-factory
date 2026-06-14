@@ -20,15 +20,54 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def find_raw_source(episode: Path, panel_id: str) -> str:
-    candidates = sorted((episode / "assets" / "images-raw").glob(f"{panel_id}_*.png"))
-    if not candidates:
-        print(f"  WARNING: no raw source found for {panel_id} in assets/images-raw/")
-        return "unknown"
-    return str(candidates[0].relative_to(episode))
+def _load_selected_candidates(episode: Path) -> dict[str, str]:
+    path = episode / "selected-candidates.json"
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return {}
 
 
-def panel_section(episode: Path, panel_id: str, provider: str) -> str:
+def _load_caption_layout_sources(episode: Path) -> dict[str, str]:
+    """Extract source fields from caption-layout.json (dict-form entries only)."""
+    path = episode / "caption-layout.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return {}
+    result = {}
+    for panel_id, value in data.items():
+        if isinstance(value, dict) and value.get("source"):
+            result[panel_id] = value["source"]
+    return result
+
+
+def find_tracked_source(
+    episode: Path,
+    panel_id: str,
+    selected: dict[str, str],
+    layout_sources: dict[str, str],
+) -> str:
+    """Return the tracked source path (relative to episode) or 'untracked'."""
+    # Priority: caption-layout.json source > selected-candidates.json
+    if panel_id in layout_sources:
+        return layout_sources[panel_id]
+    if panel_id in selected:
+        return selected[panel_id]
+    return "untracked"
+
+
+def panel_section(
+    episode: Path,
+    panel_id: str,
+    provider: str,
+    selected: dict[str, str],
+    layout_sources: dict[str, str],
+) -> str:
     final = episode / "assets" / "images" / f"{panel_id}.png"
     if not final.exists():
         return f"## {panel_id}\n\nFile: MISSING\n\n"
@@ -41,7 +80,7 @@ def panel_section(episode: Path, panel_id: str, provider: str) -> str:
     size_kb = round(final.stat().st_size / 1024, 1)
     is_916 = "pass" if w * 16 == h * 9 else "FAIL"
     res_pass = "pass" if h >= 1920 else "FAIL"
-    source = find_raw_source(episode, panel_id)
+    source = find_tracked_source(episode, panel_id, selected, layout_sources)
 
     return f"""## {panel_id}
 
@@ -126,8 +165,11 @@ def generate_report(episode: Path, force: bool = False) -> None:
         "\n## Summary\n\n# TODO: fill in after per-panel review\n\n",
     ]
 
+    selected = _load_selected_candidates(episode)
+    layout_sources = _load_caption_layout_sources(episode)
+
     for panel_id in panel_ids:
-        lines.append(panel_section(episode, panel_id, provider))
+        lines.append(panel_section(episode, panel_id, provider, selected, layout_sources))
 
     lines.append(carousel_section(episode, panel_ids))
 

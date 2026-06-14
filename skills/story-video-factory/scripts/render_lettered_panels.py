@@ -4,6 +4,19 @@ Usage:
     python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir>
     python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir> --panel p003
     python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir> --dry-run
+    python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir> --force-render
+
+Source resolution (per panel, in priority order):
+  1. caption-layout.json "source" field for that panel
+  2. selected-candidates.json entry for that panel
+  3. If neither: skip if assets/images/<id>.png already exists (safe default)
+     Use --force-render to overwrite, but a source must still be configured.
+
+Create selected-candidates.json in the episode dir to track approved sources:
+  {
+    "p001": "assets/images-raw/p001_002.png",
+    "p002": "assets/images-raw/p002_001.png"
+  }
 """
 
 from __future__ import annotations
@@ -83,9 +96,17 @@ def auto_wrap(text: str, font: ImageFont.FreeTypeFont, max_width: int) -> list[s
     return lines or [text]
 
 
-def find_raw_source(episode: Path, panel_id: str) -> Path | None:
-    candidates = sorted((episode / "assets" / "images-raw").glob(f"{panel_id}_*.png"))
-    return candidates[0] if candidates else None
+def load_selected_candidates(episode: Path) -> dict[str, str]:
+    """Load selected-candidates.json → {panel_id: relative_source_path}."""
+    path = episode / "selected-candidates.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+        return {k: v for k, v in data.items() if isinstance(v, str)}
+    except Exception as e:
+        print(f"WARNING: could not read selected-candidates.json: {e}")
+        return {}
 
 
 def render_panel(
@@ -175,9 +196,15 @@ def render_panel(
     return out
 
 
-def process_episode(episode: Path, only_panel: str | None = None, dry_run: bool = False) -> None:
+def process_episode(
+    episode: Path,
+    only_panel: str | None = None,
+    dry_run: bool = False,
+    force_render: bool = False,
+) -> None:
     scripts = load_script(episode)
     layout = load_caption_layout(episode)
+    selected = load_selected_candidates(episode)
 
     body_font = make_font(35)
     text_area_width = 900 - 75 - 20  # card_w - left_margin - right_padding
@@ -195,37 +222,58 @@ def process_episode(episode: Path, only_panel: str | None = None, dry_run: bool 
             print(f"WARNING: {panel_id} not found in script.json, skipping")
             continue
 
-        # Resolve lines and source
+        # Resolve lines and caption-layout source override
         if panel_id in layout:
             entry = layout[panel_id]
             lines = entry["lines"]
-            raw_source_override = entry["source"]
+            caption_source = entry["source"]
         else:
             lines = auto_wrap(script_text, body_font, text_area_width)
-            raw_source_override = None
+            caption_source = None
 
-        # Resolve source image
-        if raw_source_override:
-            source = episode / raw_source_override
+        # Source resolution priority:
+        # 1. caption-layout.json "source" field
+        # 2. selected-candidates.json entry
+        # 3. No source: protect existing final (skip) unless --force-render, but still
+        #    cannot render without a source — warn and skip either way.
+        if caption_source:
+            source = episode / caption_source
             if not source.exists():
-                print(f"WARNING: explicit source {source} not found for {panel_id}, skipping")
+                print(f"  WARNING: caption-layout source {source} not found for {panel_id}, skipping")
+                errors += 1
+                continue
+        elif panel_id in selected:
+            source = episode / selected[panel_id]
+            if not source.exists():
+                print(f"  WARNING: selected-candidates source {source} not found for {panel_id}, skipping")
                 errors += 1
                 continue
         else:
-            source = find_raw_source(episode, panel_id)
-            if source is None:
-                print(f"WARNING: no raw source candidate found for {panel_id}, skipping")
+            # No source configured — protect the existing final image
+            final = episode / "assets" / "images" / f"{panel_id}.png"
+            if final.exists():
+                print(f"  SKIP {panel_id}: final exists and no source configured"
+                      " (add to selected-candidates.json or caption-layout.json source field)")
+            else:
+                print(f"  WARNING: {panel_id} has no source configured and no final image"
+                      " — add to selected-candidates.json")
                 errors += 1
-                continue
+            continue
+
+        # Protect existing final unless --force-render
+        final = episode / "assets" / "images" / f"{panel_id}.png"
+        if final.exists() and not force_render:
+            print(f"  SKIP {panel_id}: final already exists (use --force-render to overwrite)")
+            continue
 
         out = render_panel(episode, panel_id, script_text, lines, source, dry_run=dry_run)
         if not dry_run:
             with Image.open(out) as img:
                 size = img.size
-            print(f"  {panel_id}: {out.name}  {size}  {out.stat().st_size // 1024} KB")
+            print(f"  {panel_id}: {out.name}  {size}  {out.stat().st_size // 1024} KB  ← {source.name}")
 
     if errors:
-        print(f"\n{errors} panel(s) skipped due to missing sources.")
+        print(f"\n{errors} panel(s) skipped due to missing or invalid sources.")
 
 
 def main() -> None:
@@ -233,6 +281,11 @@ def main() -> None:
     parser.add_argument("episode", help="Path to episode directory, e.g. episodes/star-in-uniform-001")
     parser.add_argument("--panel", help="Only render this panel id, e.g. p003")
     parser.add_argument("--dry-run", action="store_true", help="Print actions without writing files")
+    parser.add_argument(
+        "--force-render",
+        action="store_true",
+        help="Overwrite existing final images (requires source to be configured)",
+    )
     args = parser.parse_args()
 
     episode = Path(args.episode)
@@ -240,7 +293,7 @@ def main() -> None:
         sys.exit(f"Episode directory not found: {episode}")
 
     print(f"Rendering captions for {episode.name} ...")
-    process_episode(episode, only_panel=args.panel, dry_run=args.dry_run)
+    process_episode(episode, only_panel=args.panel, dry_run=args.dry_run, force_render=args.force_render)
     print("Done.")
 
 
