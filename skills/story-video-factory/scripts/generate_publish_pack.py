@@ -18,10 +18,6 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def read_text_safe(path: Path) -> str:
-    return path.read_text(encoding="utf-8-sig").strip() if path.exists() else ""
-
-
 def generate_pack(episode: Path, force: bool = False) -> None:
     meta = load_json(episode / "episode-meta.json")
     script_data = load_json(episode / "script.json")
