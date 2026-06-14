@@ -27,8 +27,8 @@ def load_panel_order(episode: Path) -> list[str]:
 
 
 def check_ratio(path: Path) -> tuple[bool, tuple[int, int]]:
-    img = Image.open(path)
-    w, h = img.size
+    with Image.open(path) as img:
+        w, h = img.size
     return (w * 16 == h * 9, (w, h))
 
 
