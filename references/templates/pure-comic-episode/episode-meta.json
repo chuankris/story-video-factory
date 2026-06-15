@@ -1,0 +1,21 @@
+{
+  "episode_id": "replace-me-001",
+  "title": "Replace Me",
+  "production_mode": "pure_comic",
+  "draft_mode": false,
+  "target_panel_count": 8,
+  "provider_plan": {
+    "style_anchor": "gpt-image",
+    "production_panels": "gpt-image",
+    "notes": "Choose provider before spending quota."
+  },
+  "jimeng_budget": {"max_prompts": 0, "candidates_per_panel": 0},
+  "gpt_image_budget": {"max_images": 10},
+  "minimax_budget": {"tts": false, "video": false},
+  "review_gates": {
+    "outline": "pending",
+    "comic_script": "pending",
+    "visual_bible": "pending",
+    "final_assets": "pending"
+  }
+}

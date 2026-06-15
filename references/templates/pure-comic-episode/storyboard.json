@@ -1,0 +1,16 @@
+{
+  "panels": [
+    {
+      "id": "p001",
+      "beat": "Hook",
+      "visual": "Describe the visual action clearly.",
+      "caption_source": "script.json"
+    },
+    {
+      "id": "p002",
+      "beat": "Turn",
+      "visual": "Describe the visual action clearly.",
+      "caption_source": "script.json"
+    }
+  ]
+}

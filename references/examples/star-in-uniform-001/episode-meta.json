@@ -1,0 +1,21 @@
+{
+  "episode_id": "star-in-uniform-001",
+  "title": "妈妈把星星缝进我的校服",
+  "production_mode": "pure_comic",
+  "draft_mode": false,
+  "target_panel_count": 10,
+  "provider_plan": {
+    "style_anchor": "gpt-image",
+    "production_panels": "gpt-image",
+    "notes": "M1 flow test uses GPT-image only to maximize visual consistency and emotional quality."
+  },
+  "jimeng_budget": {"max_prompts": 0, "candidates_per_panel": 0},
+  "gpt_image_budget": {"max_images": 12},
+  "minimax_budget": {"tts": false, "video": false},
+  "review_gates": {
+    "outline": "pending",
+    "comic_script": "pending",
+    "visual_bible": "pending",
+    "final_assets": "pending"
+  }
+}

@@ -1,0 +1,103 @@
+[
+  {
+    "id": "p001",
+    "panel_intent": "Opening warmth: show the mother's morning care through a cinematic home scene.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create one continuous vertical 9:16 modern warm magical-realist family comic illustration, a single full-page scene only. No comic panels, no split frames, no inset images, no borders, no collage layout. Early morning in a small contemporary Chinese apartment kitchen, soft golden sunlight entering through the window. A gentle Chinese mother in her early 30s, dark hair loosely tied, cream cardigan and apron, carefully ironing a navy-and-white school uniform on the table. Her cute elementary-school daughter, about 10-12 years old, round face, clear sensitive eyes, simple black bob or low ponytail, stands nearby with a backpack, sleepy and adorable. The school uniform sleeve is visible on the table, with a tiny golden star embroidery near the cuff catching the warm light. Breakfast, warm milk, folded books, and steam create a cozy lived-in scene. Soft semi-realistic painterly comic style, cinematic composition, delicate fabric folds, warm honey light, restrained emotion. Leave some clean lower area or soft background space for later added caption, but do not render any text. No logo, no watermark, no brand names, no readable text inside the image.",
+    "prompt_zh": "竖版9:16，必须是单幅连续画面，不要漫画分格，不要拼贴，不要小框，不要边框。现代温馨轻魔法家庭漫画。清晨的小户型厨房，柔和金色晨光从窗户照进来。三十出头的中国妈妈，黑发松松扎起，穿奶油色开衫和围裙，正在认真熨一件蓝白校服。她十到十二岁的可爱女儿站在旁边，圆圆的脸，清澈敏感的眼睛，黑色短发或低马尾，背着书包，睡眼惺忪又可爱。桌上的校服袖口要清楚可见，袖口附近有一颗小小金色星星刺绣，被晨光照亮。桌上有早餐、热牛奶、书本和蒸汽，画面温暖生活化。半写实绘本漫画风，电影构图，布料褶皱细腻，蜂蜜色暖光，情绪克制。画面下方或背景留一点干净空间，方便后期加中文旁白，但图片里不要生成文字。不出现logo、水印、品牌名、可读文字。",
+    "prompt_revision_note": "v2: force one continuous single-panel illustration, no comic page layout, make sleeve star visible."
+  },
+  {
+    "id": "p002",
+    "panel_intent": "Reveal the tiny embroidered star as the story's emotional symbol.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 close-up modern family comic panel. A cute Chinese schoolgirl's small hand gently lifts the sleeve of her navy-and-white school uniform, revealing a tiny golden star embroidered near the cuff. The stitches are slightly imperfect and handmade, glowing subtly like a secret. Around the sleeve are a breakfast plate, pencils, a school notebook, and warm morning light. The girl's face is partly visible in soft focus, curious and a little embarrassed, with round cheeks and clear eyes. Semi-realistic painterly comic style, delicate cloth texture, intimate cinematic close-up, warm cream and gold palette with soft blue shadows. No logo, no watermark, no large readable text.",
+    "prompt_zh": "竖版9:16，袖口星星的特写。可爱的中国小女孩用小手轻轻掀起蓝白校服袖口，露出一颗很小的金色星星刺绣。针脚有点歪，明显是妈妈手缝的，微微发光，像藏着秘密。周围有早餐盘、铅笔、作业本和晨光。女孩的脸在浅焦外半露出来，圆脸、清澈眼睛，好奇又有点不好意思。半写实绘本漫画风，布料纹理细腻，亲密特写，奶油金色与柔蓝阴影。不出现logo、水印、大段可读文字。"
+  },
+  {
+    "id": "p003",
+    "panel_intent": "Show the girl feeling embarrassed by visible care in public.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 cinematic comic illustration at a modern Chinese school gate on a rainy afternoon. The mother holds a transparent umbrella and leans toward her daughter with quiet concern. The cute schoolgirl in navy-and-white uniform hides the sleeve with the golden star under a backpack strap, looking slightly embarrassed while classmates run past in the rain. Wet pavement reflects warm streetlights and cool blue-gray rain. The mood is tender, not dramatic. Soft semi-realistic painterly style, expressive restrained faces, rain texture, warm mother-daughter emotion. No logo, no watermark, no readable school name or brand text.",
+    "prompt_zh": "竖版9:16，现代中国学校门口的雨天下午。妈妈撑着透明伞，关切地靠近女儿。可爱的小女孩穿蓝白校服，把有金色星星的袖口偷偷藏到书包带下面，表情有点害羞，旁边同学在雨中跑过。湿漉漉的地面反射暖色路灯和冷蓝灰雨光。气氛温柔，不夸张煽情。半写实绘本漫画风，表情克制，雨丝细腻，母女关系温暖。不出现logo、水印、学校名或品牌文字。"
+  },
+  {
+    "id": "p004",
+    "panel_intent": "Reveal the mother's hidden labor at night.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 quiet nighttime comic panel. Seen from the daughter's bedroom doorway, the mother sits alone at a small desk under a warm lamp, sewing the tiny golden star back onto the school uniform sleeve. A spool of golden thread glows softly on the table. The little girl is only a small sleepy silhouette in the doorway, secretly watching. Modern Chinese home, tender magical realism, soft painterly semi-realistic comic style, cinematic contrast between warm lamp light and cool night shadows, delicate hands and fabric detail. No logo, no watermark, no readable text.",
+    "prompt_zh": "竖版9:16，安静夜晚的家。画面从女儿卧室门口看出去，妈妈独自坐在小桌前，在暖色台灯下把松开的金色星星重新缝回校服袖口。桌上金色线团微微发光。小女孩只是门口一个睡眼惺忪的小小剪影，偷偷看着。现代中国家庭，温柔轻魔法现实主义，半写实绘本漫画风，暖台灯与冷夜色形成电影感对比，手和布料细节精致。不出现logo、水印、可读文字。"
+  },
+  {
+    "id": "p005",
+    "panel_intent": "Show first independence, with the star as quiet companion.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 modern warm comic illustration. Early morning on a quiet city sidewalk, the cute elementary-school girl walks to school alone for the first time, wearing a navy-and-white uniform and carrying a backpack. She looks small but brave in the wide sidewalk scene. The tiny golden star on her sleeve catches a thin beam of sunlight. Apartment buildings, trees, crosswalk, and soft morning haze in the background. Gentle magical realism, cinematic wide shot, warm gold highlights against cool blue-gray morning, emotional but understated. No logo, no watermark, no readable signs or brand text.",
+    "prompt_zh": "竖版9:16，清晨安静的城市人行道。可爱的中国小女孩第一次独自上学，穿蓝白校服，背着书包。她在宽阔的人行道上显得小小的，但很勇敢。袖口那颗金色星星被一束晨光照亮。背景有居民楼、树、斑马线和轻雾。轻微魔法现实主义，电影感远景，冷蓝灰早晨中有温暖金色高光，情绪安静克制。不出现logo、水印、可读招牌或品牌文字。"
+  },
+  {
+    "id": "p006",
+    "panel_intent": "Show growing tension without making either character villainous.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 modern family comic panel in an apartment entryway. The daughter, now slightly older but still in school uniform, argues with her mother while gripping the sleeve with the golden star, wrinkling the cuff. A backpack has slipped to the floor. The mother stands near the door, tired and worried, not angry. Warm indoor light meets cool evening light from the hallway, creating emotional tension. Semi-realistic painterly comic style, cinematic framing, restrained expressions, realistic mother-daughter conflict, no melodrama. No logo, no watermark, no readable text.",
+    "prompt_zh": "竖版9:16，现代家庭玄关。稍微长大一点的女儿仍穿校服，正在和妈妈争执，她攥着有金色星星的袖口，把袖口揉皱了。书包滑落在地上。妈妈站在门边，疲惫又担心，但不是愤怒。室内暖光和门外冷色楼道光交界，形成情绪张力。半写实绘本漫画风，电影构图，克制表情，真实母女冲突，不狗血。不出现logo、水印、可读文字。"
+  },
+  {
+    "id": "p007",
+    "panel_intent": "Show love continuing quietly after conflict.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 quiet nighttime modern comic illustration. A girl's school uniform is draped over a chair in her room after an argument. The mother sits beside it in dim warm lamp light, silently repairing the wrinkled sleeve and re-stitching the tiny golden star. The daughter sleeps in the background, blurred and peaceful, her round face still childlike. The room is calm, with books, a desk, and soft shadows. Gentle magical realism: the golden thread gives a faint warm glow. Painterly semi-realistic comic style, intimate emotional composition, no logo, no watermark, no readable text.",
+    "prompt_zh": "竖版9:16，吵架后的深夜。女孩的校服搭在房间椅背上，妈妈坐在昏暖台灯旁，安静地修补被揉皱的袖口，重新缝那颗小小金色星星。女儿睡在背景里，虚化而平静，圆脸仍带着孩子气。房间里有书桌、书本和柔和阴影。轻微魔法现实主义，金色线微微发光。半写实绘本漫画风，亲密安静。不出现logo、水印、可读文字。"
+  },
+  {
+    "id": "p008",
+    "panel_intent": "Graduation realization: the girl finally understands the star.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 cinematic graduation hall comic panel. The girl stands under a soft beam of stage light during an elementary-school graduation ceremony, wearing the navy-and-white uniform. The crowd and classmates are softly blurred behind. She looks down at the sleeve, where the tiny golden embroidered star glows gently, and her clear eyes become wet with sudden understanding. Warm stage light, blue shadowed auditorium, emotional close medium shot. Soft semi-realistic painterly comic style, restrained tears, cute but not childish, no big readable banners, no logo, no watermark.",
+    "prompt_zh": "竖版9:16，小学毕业礼堂。女孩站在柔和舞台光束下，穿蓝白校服，身后同学和人群虚化。她低头看见袖口那颗金色星星正在轻轻发亮，清澈的眼睛有一点湿润，像突然明白了什么。暖色舞台灯与蓝色阴影礼堂形成对比。半写实绘本漫画风，中近景，情绪克制，可爱但不过分幼稚。不出现清晰横幅文字、logo、水印。"
+  },
+  {
+    "id": "p009",
+    "panel_intent": "Years later: the star travels with the grown daughter into the city.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 modern city night comic illustration. Years later, the daughter is now a Chinese young woman in her early 20s, shoulder-length natural black hair, calm gentle eyes resembling her childhood self, practical city clothes. She stands with a suitcase on a city sidewalk beneath tall apartment lights. On her backpack is the same tiny golden star patch from childhood. She touches the star while looking toward distant city lights, brave but homesick. Blue-purple night city palette with small warm window lights like stars. Semi-realistic painterly comic style, cinematic composition, emotional solitude, no cyberpunk, no logo, no watermark, no readable brand text.",
+    "prompt_zh": "竖版9:16，多年后的现代城市夜晚。女儿已经是二十出头的中国年轻女性，肩长自然黑发，眼神和小时候一样温柔，穿实用的城市衣服，拖着行李站在高楼灯光下。她的背包上缝着同一颗小小金色星星。她轻轻摸着星星，看向远处城市灯火，勇敢但有点想家。蓝紫夜景中有许多温暖窗灯像星星。半写实绘本漫画风，电影构图，孤独但温暖。不赛博朋克，不出现logo、水印、品牌文字。"
+  },
+  {
+    "id": "p010",
+    "panel_intent": "Final emotional closure: the star becomes a path home, not a chain.",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "prompt": "Create a vertical 9:16 poetic modern family comic finale. A quiet city night scene blends with the warm window of a distant family apartment, as if city lights and home lights form a soft golden star path. In the foreground, the young woman's hand rests on a backpack with the tiny golden star patch; a phone is held loosely but the screen text is not readable. Far away, a warm apartment window suggests home and mother without needing to show her clearly. Gentle magical realism, warm gold lights against blue-purple night, cinematic emotional composition, soft painterly semi-realistic style. No logo, no watermark, no readable text.",
+    "prompt_zh": "竖版9:16，诗意温暖的结尾。安静城市夜景与远处家中温暖窗灯融合，城市灯光和家的灯像连成一条柔软金色星路。前景是年轻女性的手搭在背包上，背包有小小金色星星补丁；她松松拿着手机，但屏幕文字不可读。远处温暖的家窗暗示妈妈和回家的方向，不必清楚画出妈妈。轻微魔法现实主义，蓝紫夜色与金色灯光对比，电影感情绪构图，半写实绘本漫画风。不出现logo、水印、可读文字。"
+  }
+]

@@ -1,4 +1,4 @@
-﻿# Story Video Factory - Pure Comic First Requirements
+# Story Video Factory - Pure Comic First Requirements
 
 Status: M0 draft for development review
 Primary goal: define the first executable requirements for Claude Code development.
@@ -8,6 +8,8 @@ Primary goal: define the first executable requirements for Claude Code developme
 Story Video Factory is a reviewed story-content production system for Douyin and similar platforms.
 
 The first product priority is pure comic production. Comic-to-video and direct video are downstream extensions.
+
+As of V1, `pure_comic` is the default project mainline. The canonical operating guide is `references/modes/pure-comic.md`; `comic_to_video` and `direct_video` remain later-phase extensions.
 
 The system is not a one-click generator. It is a human-reviewed production line:
 
@@ -27,6 +29,14 @@ Existing skills:
 - `douyin-publisher-pack`: publishing package. V1 must extend/reuse this for carousel output instead of creating a new publisher skill.
 - `comic-video-composer`: later comic-to-video conversion. It expects `script.json` and `assets/images/<id>.<ext>`.
 - `minimax-media-provider`: later TTS and video generation.
+
+Mode guides and starter assets:
+
+- `references/modes/pure-comic.md`: current default production path.
+- `references/modes/comic-to-video.md`: later conversion path after a comic is approved.
+- `references/modes/direct-video.md`: later video-provider path.
+- `references/templates/pure-comic-episode/`: starter files for new pure comic episodes.
+- `references/examples/star-in-uniform-001/`: text-only example extracted from the first M1 trial.
 
 V1 additions should be references/templates under `story-video-factory` or root `references/`, not new skills, unless scripts or provider-specific automation appear.
 

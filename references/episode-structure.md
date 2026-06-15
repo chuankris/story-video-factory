@@ -1,4 +1,4 @@
-﻿# Episode Structure Spec
+# Episode Structure Spec
 
 Status: M0 draft
 
@@ -19,6 +19,7 @@ episodes/<episode-id>/
   quota-log.md
   prompt-rewrites.md
   caption-layout.json       # optional: manual line breaks per panel
+  selected-candidates.json  # approved raw source per panel
   assets/
     refs/
     images-raw/
@@ -110,6 +111,21 @@ Example:
 - The joined text of each entry must equal the matching `script.json` segment text — the render script enforces this hard.
 - Do not use this file to change caption wording — only to control how lines break visually.
 
+`selected-candidates.json`:
+
+- Manifest of approved raw image sources for each panel.
+- Required when multiple raw candidates exist.
+- The render and QC scripts use this instead of guessing the first `assets/images-raw/pNNN_*.png`.
+
+Example:
+
+```json
+{
+  "p001": "assets/images-raw/p001_002.png",
+  "p002": "assets/images-raw/p002_001.png"
+}
+```
+
 ## Post-Production Scripts
 
 These scripts live in `skills/story-video-factory/scripts/`. Run from the project root.
@@ -123,6 +139,22 @@ These scripts live in `skills/story-video-factory/scripts/`. Run from the projec
 | `prepare_pure_comic_episode.py <episode>` | Orchestrate all four steps in order |
 
 All scripts accept `--help`. The orchestrator accepts `--skip-render`, `--skip-carousel`, `--skip-qc`, `--skip-pack`, `--contact-sheet`, `--force`.
+
+## Templates And Examples
+
+Start new pure comic episodes from:
+
+```text
+references/templates/pure-comic-episode/
+```
+
+Inspect the text-only M1 example at:
+
+```text
+references/examples/star-in-uniform-001/
+```
+
+Examples intentionally exclude media assets and publish outputs. Large files stay in local `episodes/<episode-id>/assets/` and `episodes/<episode-id>/output/`.
 
 ## Naming
 

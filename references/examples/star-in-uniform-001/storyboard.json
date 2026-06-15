@@ -1,0 +1,63 @@
+[
+  {
+    "id": "p001",
+    "beat": "opening warmth",
+    "visual": "清晨厨房与餐桌，妈妈熨校服，女孩背着书包半醒半困，窗外晨光刚亮。",
+    "caption_note": "妈妈把一天的路提前铺好。"
+  },
+  {
+    "id": "p002",
+    "beat": "magical motif reveal",
+    "visual": "女孩低头看校服袖口，小小金色星星刺绣藏在线脚里，周围是早餐和书本。",
+    "caption_note": "袖口的小星星第一次出现。"
+  },
+  {
+    "id": "p003",
+    "beat": "girl embarrassment",
+    "visual": "雨天校门口，妈妈撑透明伞接女孩，女孩把袖口藏起来，同学从旁边跑过。",
+    "caption_note": "女孩开始觉得妈妈的爱有点幼稚。"
+  },
+  {
+    "id": "p004",
+    "beat": "hidden labor",
+    "visual": "夜晚卧室外，女孩从门缝看见妈妈在台灯下缝袖口，金色线团微微发光。",
+    "caption_note": "妈妈没有解释，只是继续缝。"
+  },
+  {
+    "id": "p005",
+    "beat": "first independence",
+    "visual": "清晨人行道，女孩第一次独自上学，城市还很安静，袖口星星在阳光里很小。",
+    "caption_note": "星星陪女孩走过第一段独立的路。"
+  },
+  {
+    "id": "p006",
+    "beat": "growing conflict",
+    "visual": "玄关，稍微长大的女孩和妈妈争执，书包滑落，袖口被攥皱，室内暖光和门外冷光对比。",
+    "caption_note": "长大会把爱听成唠叨。"
+  },
+  {
+    "id": "p007",
+    "beat": "quiet repair",
+    "visual": "深夜椅背上的校服，妈妈坐在暗处重新缝星星，没有叫醒女孩，房间很安静。",
+    "caption_note": "爱在女孩睡着以后继续。"
+  },
+  {
+    "id": "p008",
+    "beat": "graduation realization",
+    "visual": "小学毕业礼堂，女孩站在光束下，低头看袖口星星，眼眶发亮，人群虚化。",
+    "caption_note": "女孩第一次真正看懂那颗星星。"
+  },
+  {
+    "id": "p009",
+    "beat": "leaving home",
+    "visual": "多年后，年轻人拖行李站在大城市夜景里，背包上缝着同一颗金色星星。",
+    "caption_note": "星星从校服来到背包。"
+  },
+  {
+    "id": "p010",
+    "beat": "emotional closure",
+    "visual": "城市夜空与远处家中窗灯像星河相连，手机上给妈妈的信息发出，画面温暖安静。",
+    "caption_note": "星星不是催促，是回家的方向。"
+  }
+]
+
