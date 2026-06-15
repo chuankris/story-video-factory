@@ -1,4 +1,4 @@
-"""Orchestrate pure-comic post-production: render → carousel → QC → publish pack.
+"""Orchestrate pure-comic post-production: render -> carousel -> QC -> publish pack.
 
 Usage:
     python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir>
@@ -96,40 +96,40 @@ def main() -> None:
     print(f"{'='*60}\n")
 
     if not args.skip_render:
-        print("── Step 1: Render caption panels ──")
+        print("-- Step 1: Render caption panels --")
         if not args.force_render:
-            print("  (existing finals protected — pass --force-render to overwrite)")
+            print("  (existing finals protected - pass --force-render to overwrite)")
         renderer = _import_script("render_lettered_panels")
         renderer.process_episode(episode, force_render=args.force_render)
         print()
 
     if not args.skip_carousel:
-        print("── Step 2: Build publish carousel ──")
+        print("-- Step 2: Build publish carousel --")
         carousel = _import_script("build_publish_carousel")
         carousel.build_carousel(episode, force=args.force)
         print()
 
     if not args.skip_qc:
-        print("── Step 3: Generate QC report ──")
+        print("-- Step 3: Generate QC report --")
         qc = _import_script("generate_qc_report")
         qc.generate_report(episode, force=args.force)
         print()
 
     if not args.skip_pack:
-        print("── Step 4: Generate publish pack ──")
+        print("-- Step 4: Generate publish pack --")
         pack = _import_script("generate_publish_pack")
         pack.generate_pack(episode, force=args.force)
         print()
 
     if args.contact_sheet:
-        print("── Step 5: Build contact sheet ──")
+        print("-- Step 5: Build contact sheet --")
         build_contact_sheet(episode)
         print()
 
     print(f"\n{'='*60}")
     print("Done. Next steps:")
-    print("  1. Review output/qc-report.generated.md — fill in subjective checks.")
-    print("  2. Edit output/publish/pack.generated.md — customise titles and copy.")
+    print("  1. Review output/qc-report.generated.md - fill in subjective checks.")
+    print("  2. Edit output/publish/pack.generated.md - customise titles and copy.")
     print("  3. Upload output/publish/carousel/ to Douyin in numeric order.")
     print(f"{'='*60}\n")
 

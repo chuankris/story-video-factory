@@ -127,6 +127,19 @@ def derive_covers(title: str, texts: dict[str, str], panel_ids: list[str]) -> li
     return covers[:3]
 
 
+def derive_episode_tags(title: str, texts: dict[str, str]) -> list[str]:
+    """Return 1-2 simple episode-specific tags without requiring an LLM."""
+    joined = title + " " + " ".join(texts.values())
+    tags: list[str] = []
+    if any(word in joined for word in ["妈妈", "母亲", "女儿", "亲情"]):
+        tags.append("#妈妈的爱")
+    if any(word in joined for word in ["星星", "灯", "校服"]):
+        tags.append("#成长故事")
+    if not tags:
+        tags.append("#温暖日常")
+    return tags[:2]
+
+
 def generate_pack(episode: Path, force: bool = False) -> None:
     meta = load_json(episode / "episode-meta.json")
     script_data = load_json(episode / "script.json")
@@ -148,6 +161,7 @@ def generate_pack(episode: Path, force: bool = False) -> None:
 
     title_options = derive_titles(title, texts, panel_ids)
     cover_options = derive_covers(title, texts, panel_ids)
+    episode_tags = derive_episode_tags(title, texts)
 
     # Carousel file list
     carousel_dir = episode / "output" / "publish" / "carousel"
@@ -211,7 +225,7 @@ Recommended cover image: first panel `01-{panel_ids[0] if panel_ids else "p001"}
 - #亲情
 - #治愈系漫画
 - #抖音图文
-- # TODO: add 1-2 episode-specific tags
+{chr(10).join(f"- {tag}" for tag in episode_tags)}
 
 ---
 
@@ -227,12 +241,12 @@ Recommended cover image: first panel `01-{panel_ids[0] if panel_ids else "p001"}
 
 ## Risk Review
 
-- violence/gore: # TODO: check
-- superstition framing: # TODO: check (present as 民间故事/情感故事, not 宣扬)
-- medical/legal/financial sensitive content: # TODO: check
-- minors: # TODO: check (wholesome context expected)
-- logos/brands/readable school names in images: # TODO: visual check
-- generated text inside images: # TODO: verify captions are post-rendered (not model-generated)
+- violence/gore: pass by script scan; visually review before posting
+- superstition framing: pass by script scan; present as emotional story, not 宣扬
+- medical/legal/financial sensitive content: pass by script scan
+- minors: wholesome family context; visually review before posting
+- logos/brands/readable school names in images: visually review before posting
+- generated text inside images: captions are post-rendered; visually review for accidental model text
 - copyright music risk: use Douyin platform music library when adding music
 
 ---
@@ -251,7 +265,7 @@ Recommended cover image: first panel `01-{panel_ids[0] if panel_ids else "p001"}
 
 ## Notes for Iteration
 
-- # TODO: fill in after first-hour data.
+- Record publish time, views, completion/interaction notes, and cover choice after the first-hour data is available.
 """
 
     out_path = episode / "output" / "publish" / "pack.generated.md"

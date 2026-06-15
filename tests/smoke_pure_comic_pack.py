@@ -7,6 +7,7 @@ Run from project root (the worktree directory):
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -182,6 +183,33 @@ def test_publish_pack_lists_panel_order(minimal_episode_with_finals):
     content = (ep / "output" / "publish" / "pack.generated.md").read_text(encoding="utf-8")
     assert "p001" in content
     assert "p002" in content
+
+
+def test_publish_pack_has_no_todo_placeholders(minimal_episode_with_finals):
+    ep = minimal_episode_with_finals
+    bpc.build_carousel(ep, force=True)
+    gpp.generate_pack(ep, force=False)
+    content = (ep / "output" / "publish" / "pack.generated.md").read_text(encoding="utf-8")
+    assert "# TODO" not in content
+
+
+def test_prepare_command_output_is_ascii(minimal_episode_with_finals):
+    script = Path(__file__).parent.parent / "skills" / "story-video-factory" / "scripts" / "prepare_pure_comic_episode.py"
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            str(minimal_episode_with_finals),
+            "--skip-render",
+            "--skip-carousel",
+            "--skip-qc",
+            "--skip-pack",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    result.stdout.encode("ascii")
 
 
 # --- Sample episode integration ---

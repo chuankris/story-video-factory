@@ -97,7 +97,7 @@ def auto_wrap(text: str, font: ImageFont.FreeTypeFont, max_width: int) -> list[s
 
 
 def load_selected_candidates(episode: Path) -> dict[str, str]:
-    """Load selected-candidates.json → {panel_id: relative_source_path}."""
+    """Load selected-candidates.json as {panel_id: relative_source_path}."""
     path = episode / "selected-candidates.json"
     if not path.exists():
         return {}
@@ -235,7 +235,7 @@ def process_episode(
         # 1. caption-layout.json "source" field
         # 2. selected-candidates.json entry
         # 3. No source: protect existing final (skip) unless --force-render, but still
-        #    cannot render without a source — warn and skip either way.
+        #    cannot render without a source; warn and skip either way.
         if caption_source:
             source = episode / caption_source
             if not source.exists():
@@ -249,14 +249,14 @@ def process_episode(
                 errors += 1
                 continue
         else:
-            # No source configured — protect the existing final image
+            # No source configured; protect the existing final image
             final = episode / "assets" / "images" / f"{panel_id}.png"
             if final.exists():
                 print(f"  SKIP {panel_id}: final exists and no source configured"
                       " (add to selected-candidates.json or caption-layout.json source field)")
             else:
                 print(f"  WARNING: {panel_id} has no source configured and no final image"
-                      " — add to selected-candidates.json")
+                      " - add to selected-candidates.json")
                 errors += 1
             continue
 
@@ -270,7 +270,7 @@ def process_episode(
         if not dry_run:
             with Image.open(out) as img:
                 size = img.size
-            print(f"  {panel_id}: {out.name}  {size}  {out.stat().st_size // 1024} KB  ← {source.name}")
+            print(f"  {panel_id}: {out.name}  {size}  {out.stat().st_size // 1024} KB  <- {source.name}")
 
     if errors:
         print(f"\n{errors} panel(s) skipped due to missing or invalid sources.")

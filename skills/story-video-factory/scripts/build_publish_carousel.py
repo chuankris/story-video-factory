@@ -69,7 +69,7 @@ def build_carousel(episode: Path, force: bool = False) -> None:
 
     print(f"\nCarousel ready: {carousel_dir}")
     if errors:
-        print(f"{errors} panel(s) had warnings — review before uploading.")
+        print(f"{errors} panel(s) had warnings - review before uploading.")
 
 
 def main() -> None:
