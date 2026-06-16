@@ -1,0 +1,35 @@
+{
+  "style_id": "douyin-msyh-top",
+  "purpose": "Douyin pure-comic carousel captions placed in the upper safe zone.",
+  "font": {
+    "primary": "C:/Windows/Fonts/msyhbd.ttc",
+    "fallbacks": [
+      "C:/Windows/Fonts/msyh.ttc",
+      "C:/Windows/Fonts/simhei.ttf"
+    ]
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920
+  },
+  "safe_area": {
+    "text_zone": "upper-left",
+    "avoid_bottom_percent": 22,
+    "avoid_right_percent": 18,
+    "top_card": [52, 128, 877, 798]
+  },
+  "visual_treatment": {
+    "card_fill": "warm ivory paper, semi-transparent",
+    "highlight_strokes": ["muted red", "soft blue-gray"],
+    "font_color": "near-black warm brown",
+    "page_number": "small, non-essential, inside card"
+  },
+  "rules": [
+    "Read Chinese captions from UTF-8 script.json and caption-layout.json.",
+    "Never pass Chinese caption literals through shell commands.",
+    "caption-layout.json may control line breaks, but joined lines must exactly equal script.json text.",
+    "Do not place essential text in the bottom 22% Douyin UI zone.",
+    "Use this style for handwritten-story comics when readability is more important than decorative calligraphy."
+  ],
+  "command": "python skills/story-video-factory/scripts/render_lettered_panels.py episodes/<episode-id> --style douyin-msyh-top --force-render"
+}

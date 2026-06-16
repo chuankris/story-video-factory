@@ -117,6 +117,41 @@ def test_rendered_panel_is_1080x1920(minimal_episode):
             assert img.size == (1080, 1920), f"{pid}: {img.size}"
 
 
+def test_douyin_msyh_top_style_renders_1080x1920(minimal_episode):
+    src = minimal_episode / "assets" / "images-raw" / "p001_001.png"
+    script_text = "测试文案第一行，内容完整。"
+    lines = ["测试文案第一行，", "内容完整。"]
+    out = rlp.render_panel(
+        episode=minimal_episode,
+        panel_id="p001",
+        script_text=script_text,
+        lines=lines,
+        source=src,
+        dry_run=False,
+        style="douyin-msyh-top",
+    )
+    assert out.exists()
+    with Image.open(out) as img:
+        assert img.size == (1080, 1920)
+
+
+def test_douyin_msyh_top_style_uses_utf8_layout_lines(minimal_episode):
+    layout = {
+        "p001": {
+            "source": "assets/images-raw/p001_001.png",
+            "lines": ["测试文案第一行，", "内容完整。"],
+        }
+    }
+    (minimal_episode / "caption-layout.json").write_text(
+        json.dumps(layout, ensure_ascii=False), encoding="utf-8"
+    )
+    rlp.process_episode(minimal_episode, only_panel="p001", style="douyin-msyh-top")
+    rendered = minimal_episode / "assets" / "images" / "p001.png"
+    assert rendered.exists()
+    saved_layout = rlp.load_caption_layout(minimal_episode)
+    assert "".join(saved_layout["p001"]["lines"]) == "测试文案第一行，内容完整。"
+
+
 # --- carousel ---
 
 def test_carousel_order_and_naming(minimal_episode_with_finals):
@@ -136,6 +171,16 @@ def test_carousel_ratio_check(minimal_episode_with_finals):
     for f in (minimal_episode_with_finals / "output" / "publish" / "carousel").glob("*.png"):
         ok, (w, h) = bpc.check_ratio(f)
         assert ok, f"{f.name}: {w}x{h} is not 9:16"
+
+
+def test_carousel_can_include_cover(minimal_episode_with_finals):
+    Image.new("RGB", (1080, 1920), color=(180, 160, 130)).save(
+        minimal_episode_with_finals / "assets" / "images" / "cover.png"
+    )
+    bpc.build_carousel(minimal_episode_with_finals, force=True, include_cover=True)
+    carousel_dir = minimal_episode_with_finals / "output" / "publish" / "carousel"
+    files = sorted(f.name for f in carousel_dir.glob("*.png"))
+    assert files == ["00-cover.png", "01-p001.png", "02-p002.png"]
 
 
 # --- QC report ---
@@ -210,6 +255,34 @@ def test_prepare_command_output_is_ascii(minimal_episode_with_finals):
         text=True,
     )
     result.stdout.encode("ascii")
+
+
+def test_prepare_command_accepts_caption_style_and_cover(minimal_episode_with_finals):
+    Image.new("RGB", (1080, 1920), color=(180, 160, 130)).save(
+        minimal_episode_with_finals / "assets" / "images" / "cover.png"
+    )
+    script = Path(__file__).parent.parent / "skills" / "story-video-factory" / "scripts" / "prepare_pure_comic_episode.py"
+    subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            str(minimal_episode_with_finals),
+            "--skip-render",
+            "--skip-qc",
+            "--skip-pack",
+            "--caption-style",
+            "douyin-msyh-top",
+            "--include-cover",
+            "--force",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    files = sorted(
+        p.name for p in (minimal_episode_with_finals / "output" / "publish" / "carousel").glob("*.png")
+    )
+    assert files == ["00-cover.png", "01-p001.png", "02-p002.png"]
 
 
 # --- Sample episode integration ---

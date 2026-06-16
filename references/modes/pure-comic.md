@@ -41,6 +41,12 @@ Soft gates:
 python skills/story-video-factory/scripts/prepare_pure_comic_episode.py episodes/<episode-id> --force --contact-sheet
 ```
 
+For Douyin image posts where bottom UI would cover captions, prefer the top safe-zone Microsoft YaHei style:
+
+```bash
+python skills/story-video-factory/scripts/prepare_pure_comic_episode.py episodes/<episode-id> --caption-style douyin-msyh-top --include-cover --force --force-render --contact-sheet
+```
+
 7. Review `output/qc-report.md` and `output/publish/pack.md`.
 8. Upload numbered images from `output/publish/carousel/`.
 
@@ -50,6 +56,7 @@ python skills/story-video-factory/scripts/prepare_pure_comic_episode.py episodes
 - Manual line breaks: `caption-layout.json` only.
 - Approved raw image source: `selected-candidates.json`.
 - Final upload order: `script.json` segment order.
+- Caption style preset: `references/caption-styles/douyin-msyh-top.json` for upper/left captions that avoid Douyin bottom UI.
 
 ## Non-Goals In V1
 

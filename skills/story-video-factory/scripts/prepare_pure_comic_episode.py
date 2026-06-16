@@ -5,6 +5,7 @@ Usage:
     python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir> --skip-render --force
     python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir> --contact-sheet
     python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir> --force-render
+    python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode_dir> --caption-style douyin-msyh-top --include-cover
 
 By default the render step SKIPS panels that already have a final image in assets/images/.
 Pass --force-render to overwrite existing finals (source must be configured in
@@ -81,6 +82,17 @@ def main() -> None:
     parser.add_argument("--contact-sheet", action="store_true", help="Also generate contact sheet")
     parser.add_argument("--force", action="store_true", help="Pass --force to carousel/QC/pack sub-steps")
     parser.add_argument(
+        "--caption-style",
+        default="bottom-card",
+        choices=("bottom-card", "douyin-msyh-top"),
+        help="Caption render style to pass to render_lettered_panels.py",
+    )
+    parser.add_argument(
+        "--include-cover",
+        action="store_true",
+        help="Include assets/images/cover.png as 00-cover.png in the publish carousel",
+    )
+    parser.add_argument(
         "--force-render",
         action="store_true",
         help="Overwrite existing final panel images during render (requires source configured)",
@@ -100,13 +112,17 @@ def main() -> None:
         if not args.force_render:
             print("  (existing finals protected - pass --force-render to overwrite)")
         renderer = _import_script("render_lettered_panels")
-        renderer.process_episode(episode, force_render=args.force_render)
+        renderer.process_episode(
+            episode,
+            force_render=args.force_render,
+            style=args.caption_style,
+        )
         print()
 
     if not args.skip_carousel:
         print("-- Step 2: Build publish carousel --")
         carousel = _import_script("build_publish_carousel")
-        carousel.build_carousel(episode, force=args.force)
+        carousel.build_carousel(episode, force=args.force, include_cover=args.include_cover)
         print()
 
     if not args.skip_qc:
@@ -128,8 +144,10 @@ def main() -> None:
 
     print(f"\n{'='*60}")
     print("Done. Next steps:")
-    print("  1. Review output/qc-report.generated.md - fill in subjective checks.")
-    print("  2. Edit output/publish/pack.generated.md - customise titles and copy.")
+    print("  1. Review output/qc-report.md - fill in subjective checks.")
+    print("     If --force was not used and a final report already existed, review output/qc-report.generated.md.")
+    print("  2. Edit output/publish/pack.md - customise titles and copy.")
+    print("     If --force was not used and a final pack already existed, review output/publish/pack.generated.md.")
     print("  3. Upload output/publish/carousel/ to Douyin in numeric order.")
     print(f"{'='*60}\n")
 

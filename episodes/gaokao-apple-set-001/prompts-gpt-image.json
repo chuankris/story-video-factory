@@ -1,0 +1,86 @@
+[
+  {
+    "id": "cover",
+    "provider": "gpt-image",
+    "layout": "mobile_safe_cover",
+    "prompt": "Create a vertical 9:16 hand-drawn Douyin story comic cover, warm ivory paper texture, loose black sketch lines, soft watercolor wash. Contemporary Chinese gaokao season. A 17-year-old Chinese girl sits at a modest desk, looking quietly at three ordinary apples with small blank sticky notes, an old cracked phone, pencils, and an exam admission ticket. Her mother is softly visible in the kitchen doorway, warm and tired. Leave a large clean blank area in the upper-left for later handwritten Chinese title overlay. Keep key faces and apples away from the rightmost 18% and bottom 22% UI zones. No readable text, no logo, no watermark, no final caption.",
+    "prompt_zh": "竖版9:16，抖音手写故事漫画封面，米黄色纸张质感，松弛黑色线稿，柔和水彩。现代中国高考季。17岁女生坐在朴素书桌前，看着三个普通苹果、小空白便利贴、旧裂屏手机、铅笔和准考证；妈妈在厨房门口虚化出现，温柔疲惫。左上留大面积干净空白，后期加中文标题。右侧18%和底部22%避开关键人脸与苹果。不生成可读文字、logo、水印或最终字幕。"
+  },
+  {
+    "id": "p001",
+    "provider": "gpt-image",
+    "layout": "single_scene",
+    "prompt": "Vertical 9:16 handwritten Douyin story comic, one large scene. Contemporary Chinese high-school classroom one week before gaokao. Several students excitedly discuss expensive Apple devices on desks, but without visible logos. The heroine, a plain 17-year-old Chinese girl with a simple ponytail, lowers her eyes and quietly pushes her old cracked phone into her schoolbag. Warm paper texture, loose sketch linework, soft watercolor. Leave upper-left 30% blank for later handwritten text. Keep bottom 22% and right 18% free of key details. No readable text.",
+    "prompt_zh": "竖版9:16，手写抖音故事漫画，单大场景。高考前一周的中国高中教室，几个同学兴奋讨论昂贵电子设备，但不要出现logo。女主是朴素的17岁女生，简单马尾，低头把裂了角的旧手机塞进书包。米黄纸感、松弛线稿、柔和水彩。左上30%留白给后期文字，底部22%和右侧18%不放关键内容。不生成可读文字。"
+  },
+  {
+    "id": "p002",
+    "provider": "gpt-image",
+    "layout": "two_panel",
+    "prompt": "Vertical 9:16 two-panel handwritten comic. Top band left blank for later text. Left panel: a classmate happily takes notes on a clean modern tablet, no brand logo. Right panel: the heroine writes carefully on cheap draft paper with an old pen, smiling gently as if saying it is fine. Warm paper texture, sketchy black line, muted red and blue brush accents. No readable text, no caption, no logo.",
+    "prompt_zh": "竖版9:16，双格手写漫画。顶部留空给后期文字。左格：同学开心地用现代平板记笔记，不出现品牌logo。右格：女主用旧笔认真写草稿纸，温柔笑着像是在说没关系。米黄纸感、黑色松弛线稿、红蓝刷痕点缀。不生成可读文字。"
+  },
+  {
+    "id": "p003",
+    "provider": "gpt-image",
+    "layout": "single_scene",
+    "prompt": "Vertical 9:16 single-scene handwritten comic. Small ordinary Chinese kitchen at night. Mother washes dishes under warm light and carefully asks about the price; daughter stands at the doorway, startled and embarrassed. Leave upper-left blank kitchen wall area for text. Ordinary home, no poverty spectacle, tender silence. Paper texture, sketch lines, watercolor shadows. No readable text.",
+    "prompt_zh": "竖版9:16，单场景手写漫画。夜晚普通中国小厨房，妈妈在暖灯下洗碗，小心问价格；女儿站在门口，愣住又有点不好意思。左上厨房墙面留白给文字。普通家庭，不卖惨，气氛温柔安静。纸张质感、线稿、水彩阴影。不生成可读文字。"
+  },
+  {
+    "id": "p004",
+    "provider": "gpt-image",
+    "layout": "three_panel",
+    "prompt": "Vertical 9:16 three-panel handwritten comic with top-left story text zone left blank. Panel 1: daughter's surprised face. Panel 2: mother's wet hand pauses above a bowl. Panel 3: daughter forces a relaxed smile to reassure her mother. Warm ordinary kitchen, paper texture, loose sketch. No speech bubbles, no readable text.",
+    "prompt_zh": "竖版9:16，三格手写漫画，左上留故事文字区。第一格：女儿惊讶的表情。第二格：妈妈湿漉漉的手停在碗上。第三格：女儿强装轻松地笑，想让妈妈放心。普通温暖厨房、纸感、松弛线稿。不生成气泡或可读文字。"
+  },
+  {
+    "id": "p005",
+    "provider": "gpt-image",
+    "layout": "detail_collage",
+    "prompt": "Vertical 9:16 detail collage handwritten comic. Early morning desk. Three ordinary apples arranged like precious gifts, three small blank sticky notes, admission ticket, old pencils, warm desk lamp, schoolbag edge. Leave top 30% clean paper blank for story text. Do not render any words on notes or ticket. Warm paper texture, red and green apple accents, gentle emotion.",
+    "prompt_zh": "竖版9:16，细节拼贴手写漫画。清晨书桌，三个普通苹果像珍贵礼物一样摆着，三张空白小便利贴、准考证、旧铅笔、暖台灯、书包边缘。顶部30%留干净纸面给文字。便利贴和准考证不要生成任何字。暖纸感，红苹果和青苹果有颜色重点。"
+  },
+  {
+    "id": "p006",
+    "provider": "gpt-image",
+    "layout": "three_panel",
+    "prompt": "Vertical 9:16 three close-up panels in a handwritten Douyin story comic. Top-left blank story text zone. Panel 1: a red apple with a blank note, symbolizing safety and peace. Panel 2: a bright cheerful apple with a blank note, symbolizing happiness. Panel 3: a slightly unusual apple beside a small magnifying glass or open notebook, symbolizing curiosity. Warm morning desk, emotional still-life, paper texture, loose black sketch lines, soft watercolor. No readable text, no logo, no final caption.",
+    "prompt_zh": "竖版9:16，三格近景手写抖音故事漫画。左上留空给后期文字。第一格：红苹果和空白小纸条，象征平安；第二格：明亮温暖的苹果和空白小纸条，象征快乐；第三格：稍微特别的苹果旁边放小放大镜或打开的笔记本，象征永远不要失去好奇心。清晨书桌、静物情绪、纸张质感、松弛黑线稿、柔和水彩。不生成可读文字、logo或最终字幕。"
+  },
+  {
+    "id": "p007",
+    "provider": "gpt-image",
+    "layout": "four_panel",
+    "prompt": "Vertical 9:16 four-panel handwritten comic sequence. Top band left blank for text. Panel 1: girl complains the apple is heavy. Panel 2: she walks down the stairwell. Panel 3: she pauses and looks back. Panel 4: she secretly puts the apple back into her backpack. Cute restrained expressions, warm paper texture, no speech bubbles, no readable text.",
+    "prompt_zh": "竖版9:16，四格手写漫画。顶部留白放文字。第一格：女孩嫌苹果重。第二格：她走到楼梯间。第三格：她停下来回头。第四格：她偷偷把苹果放回书包。表情可爱但克制，暖纸感，无气泡、无可读文字。"
+  },
+  {
+    "id": "p008",
+    "provider": "gpt-image",
+    "layout": "single_scene",
+    "prompt": "Vertical 9:16 single wide scene handwritten comic. Rainy gaokao exam site outside a school gate, no readable school name. Mother stands at the back of the crowd with wet cloth shoes, holding a transparent plastic bag with an apple inside. The daughter is distant near the gate or implied by the crowd. Leave upper-left rainy sky/wall blank for text. Emotional but not melodramatic. No readable text.",
+    "prompt_zh": "竖版9:16，单大场景手写漫画。雨天高考考点门外，不出现可读校名。妈妈站在人群最后面，布鞋湿了，手里攥着透明袋，里面有一个苹果。女儿在远处校门附近或由人群暗示。左上雨天墙面/天空留白给文字。情绪克制，不狗血。不生成可读文字。"
+  },
+  {
+    "id": "p009",
+    "provider": "gpt-image",
+    "layout": "single_scene",
+    "prompt": "Vertical 9:16 single-scene handwritten Douyin story comic. After gaokao evening dinner in a modest Chinese family home. Father and mother have cooked the daughter's favorite dishes: simple home-cooked food on a small table, warm lamp, steam rising, the daughter sitting down still tired from exams. The table is ordinary but full of care, not luxurious. Leave upper-left warm wall/paper area blank for later handwritten text. Keep right 18% and bottom 22% free of key text and faces. No readable text, no logo, no caption.",
+    "prompt_zh": "竖版9:16，单场景手写抖音故事漫画。高考结束那晚，普通中国家庭的晚饭桌。爸爸和妈妈做了女儿爱吃的家常菜，小餐桌、暖灯、饭菜冒热气，女儿刚考完还有些疲惫地坐下。饭桌不豪华，但充满照顾和爱。左上墙面或纸感区域留白给后期文字。右侧18%和底部22%避开关键人脸与文字。不生成可读文字、logo或字幕。"
+  },
+  {
+    "id": "p010",
+    "provider": "gpt-image",
+    "layout": "detail_collage",
+    "prompt": "Vertical 9:16 object collage handwritten comic. Top-left blank paper area for text. Objects on a simple table: mother's blank leave-request slip, wet cloth shoes, convenience-store receipt with no readable numbers, umbrella, untouched apple, corner of exam admission ticket with no readable text. Warm sad tenderness, paper texture, sketch line, no readable text.",
+    "prompt_zh": "竖版9:16，物件拼贴式手写漫画。左上留空给后期文字。简朴桌面上放着妈妈的请假条（不要可读文字）、湿掉的布鞋、便利店小票（不要可读数字）、雨伞、一个没舍得吃的苹果，以及准考证一角（不要可读文字）。温柔又有点酸涩，纸张质感，松弛线稿。不生成可读文字。"
+  },
+  {
+    "id": "p011",
+    "provider": "gpt-image",
+    "layout": "single_scene",
+    "prompt": "Vertical 9:16 single-scene handwritten comic finale. Years later, the daughter as a young Chinese woman sits at a university dorm or first workplace desk. She places a fresh apple beside a laptop, old exam keepsake photo, and a small notebook full of curious sketches or questions. She smiles quietly with understanding. Warm morning light, paper texture, gentle closure. Upper-left 35% blank for final handwritten line. No readable text, no logo.",
+    "prompt_zh": "竖版9:16，单场景手写漫画结尾。多年后，女儿已经是年轻的中国女性，坐在大学宿舍或初入职场的小书桌前。她把一个新鲜苹果放在电脑旁，旁边有旧高考纪念照片和一本写满问题/涂鸦的小笔记本，像是仍保留着好奇心。她安静微笑，终于懂了妈妈的心意。温暖晨光、纸张质感、温柔收束。左上35%留白给最终文字。不生成可读文字或logo。"
+  }
+]

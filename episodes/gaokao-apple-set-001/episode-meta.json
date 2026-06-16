@@ -1,0 +1,24 @@
+﻿{
+  "episode_id": "gaokao-apple-set-001",
+  "title": "高考前，我妈给我买了一套苹果三件套",
+  "production_mode": "pure_comic",
+  "draft_mode": false,
+  "target_panel_count": 11,
+  "layout_mode": "handwritten_mixed_panel",
+  "cover_mode": "mobile_safe_cover",
+  "provider_plan": {
+    "style_anchor": "gpt-image",
+    "production_panels": "gpt-image",
+    "notes": "M2 flow test: handwritten Douyin-native mixed-panel comic with top text overlay and mobile-safe cover. Do not render final text with image model."
+  },
+  "jimeng_budget": {"max_prompts": 0, "candidates_per_panel": 0},
+  "gpt_image_budget": {"max_images": 15},
+  "minimax_budget": {"tts": false, "video": false},
+  "review_gates": {
+    "outline": "pending",
+    "comic_script": "pending",
+    "visual_bible": "pending",
+    "final_assets": "pending",
+    "cover": "pending"
+  }
+}

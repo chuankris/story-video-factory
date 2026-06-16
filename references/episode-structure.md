@@ -22,6 +22,7 @@ episodes/<episode-id>/
   selected-candidates.json  # approved raw source per panel
   assets/
     refs/
+    candidates/
     images-raw/
     images/
     audio/
@@ -91,6 +92,12 @@ Example:
 
 - provider outputs and manually imported candidates.
 
+`assets/candidates/`:
+
+- local candidate images produced during experiments or built-in image generation.
+- may also be referenced by `selected-candidates.json`.
+- keep large image files local; commit only text manifests and specs.
+
 `assets/images/`:
 
 - selected final panels named by panel id.
@@ -132,13 +139,13 @@ These scripts live in `skills/story-video-factory/scripts/`. Run from the projec
 
 | Script | Purpose |
 |--------|---------|
-| `render_lettered_panels.py <episode>` | Batch-render captioned panels from raw assets into `assets/images/` |
-| `build_publish_carousel.py <episode>` | Copy final images to numbered `output/publish/carousel/` folder |
+| `render_lettered_panels.py <episode>` | Batch-render captioned panels from raw assets into `assets/images/`; supports `--style douyin-msyh-top` |
+| `build_publish_carousel.py <episode>` | Copy final images to numbered `output/publish/carousel/` folder; supports `--include-cover` |
 | `generate_qc_report.py <episode>` | Generate QC report skeleton with auto-filled objective fields |
 | `generate_publish_pack.py <episode>` | Generate publish pack draft (titles, cover text, hashtags) |
 | `prepare_pure_comic_episode.py <episode>` | Orchestrate all four steps in order |
 
-All scripts accept `--help`. The orchestrator accepts `--skip-render`, `--skip-carousel`, `--skip-qc`, `--skip-pack`, `--contact-sheet`, `--force`.
+All scripts accept `--help`. The orchestrator accepts `--skip-render`, `--skip-carousel`, `--skip-qc`, `--skip-pack`, `--contact-sheet`, `--force`, `--caption-style`, `--include-cover`.
 
 ## Templates And Examples
 

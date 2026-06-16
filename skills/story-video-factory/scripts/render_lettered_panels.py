@@ -2,6 +2,7 @@
 
 Usage:
     python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir>
+    python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir> --style douyin-msyh-top
     python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir> --panel p003
     python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir> --dry-run
     python skills/story-video-factory/scripts/render_lettered_panels.py <episode_dir> --force-render
@@ -36,9 +37,17 @@ FONT_PATHS = [
     "C:/Windows/Fonts/simsun.ttc",
 ]
 
+MSYH_BOLD_PATHS = [
+    "C:/Windows/Fonts/msyhbd.ttc",
+    "C:/Windows/Fonts/msyh.ttc",
+    "C:/Windows/Fonts/simhei.ttf",
+]
 
-def make_font(size: int) -> ImageFont.FreeTypeFont:
-    for path in FONT_PATHS:
+STYLES = ("bottom-card", "douyin-msyh-top")
+
+
+def make_font(size: int, paths: list[str] | None = None) -> ImageFont.FreeTypeFont:
+    for path in paths or FONT_PATHS:
         if Path(path).exists():
             return ImageFont.truetype(path, size)
     raise RuntimeError(
@@ -96,42 +105,33 @@ def auto_wrap(text: str, font: ImageFont.FreeTypeFont, max_width: int) -> list[s
     return lines or [text]
 
 
-def load_selected_candidates(episode: Path) -> dict[str, str]:
-    """Load selected-candidates.json as {panel_id: relative_source_path}."""
-    path = episode / "selected-candidates.json"
-    if not path.exists():
-        return {}
-    try:
-        data = json.loads(path.read_text(encoding="utf-8-sig"))
-        return {k: v for k, v in data.items() if isinstance(v, str)}
-    except Exception as e:
-        print(f"WARNING: could not read selected-candidates.json: {e}")
-        return {}
+def fit_douyin_top_font(lines: list[str]) -> tuple[ImageFont.FreeTypeFont, int]:
+    """Pick a Microsoft YaHei font size that keeps text in the top safe card."""
+    for size in (52, 49, 46, 43, 40):
+        font = make_font(size, MSYH_BOLD_PATHS)
+        if all(font.getlength(line) <= 790 for line in lines):
+            line_gap = int(size * 1.34)
+            card_h = 72 + len(lines) * line_gap
+            if card_h <= 670:
+                return font, line_gap
+    size = 38
+    return make_font(size, MSYH_BOLD_PATHS), int(size * 1.34)
 
 
-def render_panel(
-    episode: Path,
-    panel_id: str,
-    script_text: str,
-    lines: list[str],
-    source: Path,
-    dry_run: bool = False,
-) -> Path:
-    joined = "".join(lines)
-    if joined != script_text:
-        print(f"ERROR: caption-layout lines for {panel_id} do not match script.json")
-        print(f"  script : {script_text!r}")
-        print(f"  layout : {joined!r}")
-        sys.exit(1)
+def fit_auto_douyin_top_lines(text: str) -> tuple[ImageFont.FreeTypeFont, list[str], int]:
+    """Auto-wrap fallback for episodes without manual caption-layout lines."""
+    for size in (52, 49, 46, 43, 40):
+        font = make_font(size, MSYH_BOLD_PATHS)
+        lines = auto_wrap(text, font, 770)
+        line_gap = int(size * 1.34)
+        card_h = 72 + len(lines) * line_gap
+        if len(lines) <= 7 and card_h <= 670:
+            return font, lines, line_gap
+    font = make_font(38, MSYH_BOLD_PATHS)
+    return font, auto_wrap(text, font, 780), int(38 * 1.34)
 
-    out = episode / "assets" / "images" / f"{panel_id}.png"
-    page_num = panel_id.removeprefix("p").lstrip("0") or "0"
-    page_label = page_num.zfill(2)
 
-    if dry_run:
-        print(f"[dry-run] {panel_id}: {source} -> {out}  lines={lines}")
-        return out
-
+def normalize_to_canvas(source: Path) -> Image.Image:
     img = Image.open(source).convert("RGB")
     scale = max(W / img.width, H / img.height)
     img = img.resize(
@@ -139,8 +139,10 @@ def render_panel(
     )
     left = (img.width - W) // 2
     top = (img.height - H) // 2
-    base = img.crop((left, top, left + W, top + H)).convert("RGBA")
+    return img.crop((left, top, left + W, top + H)).convert("RGBA")
 
+
+def render_bottom_card(base: Image.Image, lines: list[str], page_label: str) -> Image.Image:
     # Bottom gradient
     fade_h = 420
     grad = Image.new("RGBA", (W, fade_h), (0, 0, 0, 0))
@@ -190,6 +192,112 @@ def render_panel(
         fill=(120, 105, 82, 210),
         font=small,
     )
+    return base
+
+
+def render_douyin_msyh_top(
+    base: Image.Image,
+    script_text: str,
+    lines: list[str],
+    page_label: str,
+) -> Image.Image:
+    """Render readable Microsoft YaHei captions in the upper safe zone.
+
+    This style avoids the bottom 22% Douyin UI zone and keeps key text away
+    from the right-side action buttons. It is intentionally sourced from
+    UTF-8 files (`script.json` / `caption-layout.json`), not shell literals.
+    """
+    if lines:
+        font, line_gap = fit_douyin_top_font(lines)
+    else:
+        font, lines, line_gap = fit_auto_douyin_top_lines(script_text)
+    small = make_font(24)
+
+    text_x = 86
+    text_y = 154
+    card_w = 825
+    card_h = 72 + len(lines) * line_gap
+    card = (52, 128, 52 + card_w, 128 + card_h)
+
+    shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shadow)
+    sd.rounded_rectangle(
+        (card[0] + 6, card[1] + 10, card[2] + 6, card[3] + 10),
+        radius=34,
+        fill=(75, 55, 35, 38),
+    )
+    shadow = shadow.filter(ImageFilter.GaussianBlur(14))
+    base.alpha_composite(shadow)
+
+    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    od = ImageDraw.Draw(overlay)
+    od.rounded_rectangle(card, radius=34, fill=(255, 248, 229, 120))
+    base.alpha_composite(overlay)
+
+    draw = ImageDraw.Draw(base)
+    brush_colors = [(205, 145, 132, 116), (154, 179, 186, 105)]
+    for i, line in enumerate(lines):
+        ly = text_y + i * line_gap
+        bbox = draw.textbbox((text_x, ly), line, font=font)
+        tw = bbox[2] - bbox[0]
+        th = bbox[3] - bbox[1]
+        strip_y = ly + th // 2 - 9
+        draw.rounded_rectangle(
+            (text_x - 14, strip_y, text_x + tw + 14, strip_y + 34),
+            radius=13,
+            fill=brush_colors[i % 2],
+        )
+        draw.text((text_x, ly), line, fill=(35, 30, 24, 255), font=font)
+
+    draw.text((card[2] - 68, card[3] - 42), page_label, fill=(110, 96, 78, 150), font=small)
+    return base
+
+
+def load_selected_candidates(episode: Path) -> dict[str, str]:
+    """Load selected-candidates.json as {panel_id: relative_source_path}."""
+    path = episode / "selected-candidates.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+        return {k: v for k, v in data.items() if isinstance(v, str)}
+    except Exception as e:
+        print(f"WARNING: could not read selected-candidates.json: {e}")
+        return {}
+
+
+def render_panel(
+    episode: Path,
+    panel_id: str,
+    script_text: str,
+    lines: list[str],
+    source: Path,
+    dry_run: bool = False,
+    style: str = "bottom-card",
+) -> Path:
+    if style not in STYLES:
+        sys.exit(f"ERROR: unknown render style '{style}'. Choose one of: {', '.join(STYLES)}")
+
+    joined = "".join(lines)
+    if joined != script_text:
+        print(f"ERROR: caption-layout lines for {panel_id} do not match script.json")
+        print(f"  script : {script_text!r}")
+        print(f"  layout : {joined!r}")
+        sys.exit(1)
+
+    out = episode / "assets" / "images" / f"{panel_id}.png"
+    page_num = panel_id.removeprefix("p").lstrip("0") or "0"
+    page_label = page_num.zfill(2)
+
+    if dry_run:
+        print(f"[dry-run] {panel_id}: {source} -> {out}  style={style}  lines={lines}")
+        return out
+
+    base = normalize_to_canvas(source)
+    if style == "douyin-msyh-top":
+        base = render_douyin_msyh_top(base, script_text, lines, page_label)
+    else:
+        base = render_bottom_card(base, lines, page_label)
 
     out.parent.mkdir(parents=True, exist_ok=True)
     base.convert("RGB").save(out)
@@ -201,13 +309,21 @@ def process_episode(
     only_panel: str | None = None,
     dry_run: bool = False,
     force_render: bool = False,
+    style: str = "bottom-card",
 ) -> None:
+    if style not in STYLES:
+        sys.exit(f"ERROR: unknown render style '{style}'. Choose one of: {', '.join(STYLES)}")
+
     scripts = load_script(episode)
     layout = load_caption_layout(episode)
     selected = load_selected_candidates(episode)
 
-    body_font = make_font(35)
-    text_area_width = 900 - 75 - 20  # card_w - left_margin - right_padding
+    if style == "douyin-msyh-top":
+        body_font = make_font(52, MSYH_BOLD_PATHS)
+        text_area_width = 770
+    else:
+        body_font = make_font(35)
+        text_area_width = 900 - 75 - 20  # card_w - left_margin - right_padding
 
     panel_ids = list(scripts.keys())
     if only_panel:
@@ -266,11 +382,22 @@ def process_episode(
             print(f"  SKIP {panel_id}: final already exists (use --force-render to overwrite)")
             continue
 
-        out = render_panel(episode, panel_id, script_text, lines, source, dry_run=dry_run)
+        out = render_panel(
+            episode,
+            panel_id,
+            script_text,
+            lines,
+            source,
+            dry_run=dry_run,
+            style=style,
+        )
         if not dry_run:
             with Image.open(out) as img:
                 size = img.size
-            print(f"  {panel_id}: {out.name}  {size}  {out.stat().st_size // 1024} KB  <- {source.name}")
+            print(
+                f"  {panel_id}: {out.name}  {size}  {out.stat().st_size // 1024} KB"
+                f"  style={style}  <- {source.name}"
+            )
 
     if errors:
         print(f"\n{errors} panel(s) skipped due to missing or invalid sources.")
@@ -281,6 +408,12 @@ def main() -> None:
     parser.add_argument("episode", help="Path to episode directory, e.g. episodes/star-in-uniform-001")
     parser.add_argument("--panel", help="Only render this panel id, e.g. p003")
     parser.add_argument("--dry-run", action="store_true", help="Print actions without writing files")
+    parser.add_argument(
+        "--style",
+        choices=STYLES,
+        default="bottom-card",
+        help="Caption render style. Use douyin-msyh-top for top safe-zone Microsoft YaHei captions.",
+    )
     parser.add_argument(
         "--force-render",
         action="store_true",
@@ -293,7 +426,13 @@ def main() -> None:
         sys.exit(f"Episode directory not found: {episode}")
 
     print(f"Rendering captions for {episode.name} ...")
-    process_episode(episode, only_panel=args.panel, dry_run=args.dry_run, force_render=args.force_render)
+    process_episode(
+        episode,
+        only_panel=args.panel,
+        dry_run=args.dry_run,
+        force_render=args.force_render,
+        style=args.style,
+    )
     print("Done.")
 
 

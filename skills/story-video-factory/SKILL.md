@@ -96,6 +96,8 @@ python skills/story-video-factory/scripts/prepare_pure_comic_episode.py <episode
 ```
 
 - Caption text comes from `script.json` only. The render script enforces this; mismatched `caption-layout.json` causes a hard exit.
+- For Douyin-native top captions, use `--caption-style douyin-msyh-top`; the style is defined in `references/caption-styles/douyin-msyh-top.json`.
+- If a title cover exists at `assets/images/cover.png`, add `--include-cover` so the carousel starts with `00-cover.png`.
 - Approved raw image sources belong in `selected-candidates.json`; do not guess from the first raw candidate.
 - `output/publish/carousel/` is the Douyin upload folder, not `assets/images/`.
 - QC report auto-fills objective fields (resolution, ratio, size); subjective fields require human review.
