@@ -285,6 +285,82 @@ def test_prepare_command_accepts_caption_style_and_cover(minimal_episode_with_fi
     assert files == ["00-cover.png", "01-p001.png", "02-p002.png"]
 
 
+# --- New episode scaffolding ---
+
+def test_new_pure_comic_episode_creates_standard_files(tmp_path):
+    import new_pure_comic_episode as npe
+
+    ep = tmp_path / "ring-home-001"
+    npe.create_episode(
+        ep,
+        title="响五声就好",
+        panel_count=11,
+        era="2006 China",
+        theme="长途电话亲情",
+    )
+
+    assert (ep / "episode-meta.json").exists()
+    assert (ep / "script.json").exists()
+    assert (ep / "storyboard.json").exists()
+    assert (ep / "assets" / "refs").is_dir()
+    assert (ep / "assets" / "images-raw").is_dir()
+    assert (ep / "assets" / "images").is_dir()
+    assert (ep / "output" / "publish").is_dir()
+
+    meta = json.loads((ep / "episode-meta.json").read_text(encoding="utf-8-sig"))
+    assert meta["episode_id"] == "ring-home-001"
+    assert meta["title"] == "响五声就好"
+    assert meta["target_panel_count"] == 11
+    assert meta["era"] == "2006 China"
+    assert meta["theme"] == "长途电话亲情"
+    assert meta["provider_plan"]["production_panels"] == "gpt-image"
+    assert meta["provider_plan"]["caption_style"] == "douyin-msyh-top"
+
+    selected = json.loads((ep / "selected-candidates.json").read_text(encoding="utf-8-sig"))
+    jimeng = json.loads((ep / "prompts-jimeng.json").read_text(encoding="utf-8-sig"))
+    assert selected == {}
+    assert jimeng == []
+
+
+def test_new_pure_comic_episode_refuses_existing_without_force(tmp_path):
+    import new_pure_comic_episode as npe
+
+    ep = tmp_path / "existing-001"
+    npe.create_episode(ep, title="第一次")
+
+    with pytest.raises(SystemExit):
+        npe.create_episode(ep, title="第二次")
+
+    meta = json.loads((ep / "episode-meta.json").read_text(encoding="utf-8-sig"))
+    assert meta["title"] == "第一次"
+
+
+def test_new_pure_comic_episode_force_recreates_existing(tmp_path):
+    import new_pure_comic_episode as npe
+
+    ep = tmp_path / "force-001"
+    npe.create_episode(ep, title="旧标题")
+    (ep / "extra.txt").write_text("remove me", encoding="utf-8")
+
+    npe.create_episode(ep, title="新标题", force=True)
+
+    meta = json.loads((ep / "episode-meta.json").read_text(encoding="utf-8-sig"))
+    assert meta["title"] == "新标题"
+    assert not (ep / "extra.txt").exists()
+
+
+def test_new_pure_comic_episode_cli_help_runs():
+    script = Path(__file__).parent.parent / "skills" / "story-video-factory" / "scripts" / "new_pure_comic_episode.py"
+    result = subprocess.run(
+        [sys.executable, str(script), "--help"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "--title" in result.stdout
+    assert "--panel-count" in result.stdout
+
+
 # --- Sample episode integration ---
 
 @pytest.mark.skipif(not SAMPLE_EPISODE.exists(), reason="sample episode not present")

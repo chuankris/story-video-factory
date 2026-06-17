@@ -30,7 +30,12 @@ Soft gates:
 
 ## Canonical Flow
 
-1. Create episode folder from `references/templates/pure-comic-episode/`.
+1. Create episode folder with:
+
+```bash
+python skills/story-video-factory/scripts/new_pure_comic_episode.py episodes/<episode-id> --title "故事标题" --panel-count 11
+```
+
 2. Fill `episode-meta.json`, `outline.md`, `script.json`, and `storyboard.json`.
 3. Draft `style-profile.md`, `character-cards.md`, and `visual-bible.md`.
 4. Generate or import images into `assets/images-raw/`.

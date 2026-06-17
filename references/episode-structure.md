@@ -139,6 +139,7 @@ These scripts live in `skills/story-video-factory/scripts/`. Run from the projec
 
 | Script | Purpose |
 |--------|---------|
+| `new_pure_comic_episode.py <episode> --title "..."` | Create a new pure-comic episode scaffold from the canonical template |
 | `render_lettered_panels.py <episode>` | Batch-render captioned panels from raw assets into `assets/images/`; supports `--style douyin-msyh-top` |
 | `build_publish_carousel.py <episode>` | Copy final images to numbered `output/publish/carousel/` folder; supports `--include-cover` |
 | `generate_qc_report.py <episode>` | Generate QC report skeleton with auto-filled objective fields |
@@ -151,9 +152,11 @@ All scripts accept `--help`. The orchestrator accepts `--skip-render`, `--skip-c
 
 Start new pure comic episodes from:
 
-```text
-references/templates/pure-comic-episode/
+```bash
+python skills/story-video-factory/scripts/new_pure_comic_episode.py episodes/<episode-id> --title "故事标题" --panel-count 11
 ```
+
+The script copies `references/templates/pure-comic-episode/`, creates local asset/output folders, writes `episode-meta.json`, and initializes empty provider manifests.
 
 Inspect the text-only M1 example at:
 

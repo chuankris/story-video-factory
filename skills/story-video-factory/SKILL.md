@@ -18,7 +18,7 @@ The current V1 mainline is `pure_comic`: a reviewed Douyin image carousel with l
 Start here unless the user explicitly chooses video:
 
 1. Load `references/modes/pure-comic.md`.
-2. Create or inspect an episode folder using `references/templates/pure-comic-episode/`.
+2. Create a new episode with `scripts/new_pure_comic_episode.py`, or inspect an existing episode folder.
 3. Move through outline, script, storyboard, visual bible, prompts, selected images, QC, and publish pack.
 
 `comic_to_video` and `direct_video` are later-phase modes. Do not spend TTS or video quota until the user explicitly switches modes.
@@ -88,6 +88,12 @@ Load only what is needed:
 - When waiting on rendering or asset generation, move another episode forward only through review-safe steps.
 
 ## Post-Production (Pure Comic)
+
+Create new pure-comic episodes with the scaffold script:
+
+```bash
+python skills/story-video-factory/scripts/new_pure_comic_episode.py episodes/<episode-id> --title "故事标题" --panel-count 11
+```
 
 After final assets are selected, run the packaging scripts rather than doing these steps manually:
 
