@@ -1,0 +1,122 @@
+﻿[
+  {
+    "id": "cover",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "Cover image for a nostalgic 2006 mother-son phone story.",
+    "prompt_zh": "封面。2006年普通县城家中，昏黄灯光下，妈妈站在老式座机旁，手悬在听筒上没有接。电话线像细线一样延伸到远处冷蓝色的大学电话亭。画面有旧挂历、搪瓷杯、木桌、暖黄灯泡。不要生成文字，给顶部中文标题留干净空间。",
+    "prompt": "Create a vertical 9:16 nostalgic Chinese comic illustration set in 2006. In a modest county-town home at night, a restrained middle-aged Chinese mother stands beside a cream-colored old landline telephone on a small wooden table, her hand hovering above the receiver without picking it up. Warm tungsten light, old wall calendar, enamel cup, thermos, chipped wooden table, quiet room. A faint telephone cord or visual thread leads toward a distant cold blue university phone booth as a memory motif. Soft semi-realistic painterly comic style, pencil-like linework, watercolor wash, paper texture, cinematic but grounded emotion. Leave clean upper-left space for later Chinese title text. No readable text, no logo, no watermark, no smartphone, no modern objects."
+  },
+  {
+    "id": "p001",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "Opening hook: mother never answers the phone.",
+    "prompt_zh": "昏黄夜晚的2006年普通家中，老式奶白色座机正在响，妈妈站在旁边，手悬在听筒上却不接。旧挂历、搪瓷杯、暖水瓶、木桌，气氛安静克制。顶部留白给后期字幕。",
+    "prompt": "Create a vertical 9:16 comic illustration set in a modest Chinese county-town home in 2006 at night. A cream-colored old landline telephone rings on a small wooden table. A middle-aged Chinese mother with tied-back black hair, simple sweater and apron stands beside it, hand hovering above the receiver, deliberately not picking up. Old wall calendar, enamel cup, thermos, warm tungsten bulb, chipped wooden furniture. Restrained expression, quiet suspense and tenderness. Soft semi-realistic painterly comic style, pencil lines, watercolor wash, nostalgic film grain. Leave clean upper-left caption space. No readable text, no logo, no watermark, no smartphone or modern device."
+  },
+  {
+    "id": "p002",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "Son leaves home and arrives at university with modest belongings.",
+    "prompt_zh": "2006年大学宿舍报到。18岁男孩提着旧帆布箱和新被套，手里露出一张长途电话卡。铁架床、搪瓷脸盆、蚊帐、旧书包，朴素但有希望。",
+    "prompt": "Create a vertical 9:16 nostalgic Chinese comic illustration of a 2006 university dormitory arrival. An 18-year-old Chinese freshman, slim, short black hair, modest faded jacket, carries a patched canvas suitcase and a folded new quilt cover. A thin long-distance phone card is visible in his hand or pocket. Iron bunk beds, enamel washbasin, mosquito net, old backpacks, concrete dorm walls. He looks nervous but hopeful. Soft semi-realistic painterly comic style, pencil-like lines, watercolor texture, warm daylight. Leave clean upper-left caption space. No readable text, no logo, no watermark, no modern smartphone."
+  },
+  {
+    "id": "p003",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "Mother explains the weekly Friday 7 PM phone rule before departure.",
+    "prompt_zh": "2006年夏末火车站站台，妈妈帮儿子整理衣领，低声叮嘱电话约定。儿子背着帆布包，脚边有行李箱。背景是老绿皮火车和模糊人群，离别但不煽情。",
+    "prompt": "Create a vertical 9:16 comic illustration on a Chinese train station platform in late summer 2006. A practical middle-aged mother gently adjusts her college-bound son's collar while quietly explaining something important. The son wears a canvas backpack, with a modest suitcase beside him. Old green train in the background, blurred crowd, dusty warm sunlight, handwritten luggage tags as era detail. The mood is separation and practical tenderness, not melodrama. Soft semi-realistic painterly comic style, pencil linework and watercolor wash. Leave clean upper-left caption space. No readable text, no logos, no modern objects."
+  },
+  {
+    "id": "p004",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "Five rings means safe; mother should not answer to save long-distance fees.",
+    "prompt_zh": "一个连续画面：大学校园小卖部电话旁，儿子拿电话卡拨长途；另一侧像记忆一样出现老家座机响起，妈妈守在旁边不接。用电话线把两个空间连接，不要硬分格。",
+    "prompt": "Create one continuous vertical 9:16 nostalgic Chinese comic illustration, not a hard comic grid. On one side, a 2006 university campus grocery-store public phone: the young freshman uses a long-distance phone card to call home. On the other side, blended like a memory, the modest home landline rings while his mother watches without answering. A curling telephone cord motif connects the two spaces. Warm home light contrasts with cooler campus light. Soft semi-realistic painterly comic style, pencil lines, watercolor texture. Leave clean upper-left caption space. No readable text, no logo, no watermark, no smartphone."
+  },
+  {
+    "id": "p005",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "The emergency rule is made concrete through household objects.",
+    "prompt_zh": "桌面静物。妈妈的手在旧挂历背面写下电话规则，旁边有铅笔、电话账单、几枚硬币、一小盆菜、门边儿子的行李。重点是穷但细心。尽量不要出现可读大字。",
+    "prompt": "Create a vertical 9:16 nostalgic Chinese comic tabletop scene in a modest 2006 home. Close-up of the mother's hand writing a small phone rule on the back of an old calendar page, with a pencil, phone bill, a few coins, a small bowl of vegetables, and the son's packed canvas bag near the door in the background. The feeling is poor but careful love, a private family ritual being made. Soft semi-realistic painterly comic style, pencil linework, watercolor wash, warm dim light. Leave clean upper-left caption space. Avoid large readable text; no logos, no watermark, no modern smartphone."
+  },
+  {
+    "id": "p006",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "Mother waits every Friday and counts the rings.",
+    "prompt_zh": "时间流逝的记忆蒙太奇：每个周五晚上，家里座机准时响，妈妈穿着不同围裙站在电话旁，用手指数铃。墙上挂历翻页，窗外光线变化，电话始终是中心。",
+    "prompt": "Create a vertical 9:16 nostalgic Chinese comic illustration showing time passing across several Friday evenings in one coherent memory montage. The same cream-colored landline telephone remains central in a modest home. The mother appears in subtle repeated poses with different simple aprons, standing beside the phone and silently counting rings on her fingers. Wall calendar pages, seasonal vegetables, changing window light suggest weeks passing. Warm tungsten indoor light, restrained worry. Soft semi-realistic painterly comic style, pencil lines, watercolor wash, paper texture. Leave clean upper-left caption space. No readable text, no logos, no smartphone."
+  },
+  {
+    "id": "p007",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "The fifth ring stops; mother relaxes and returns to ordinary chores.",
+    "prompt_zh": "老家厨房兼客厅，电话已经安静。妈妈轻轻松一口气，低头继续择豆角。窗外天黑，屋里暖灯照着她的脸和手。平凡但很暖。",
+    "prompt": "Create a vertical 9:16 nostalgic Chinese comic illustration in a modest kitchen-living room at night in 2006. The cream-colored landline telephone is now silent on a small table. The mother exhales softly, shoulders lowering, and returns to picking green beans in a basin. Warm yellow bulb light on her face and hands, dark window outside, simple apron, old wooden table, enamel cup. Ordinary relief and quiet love. Soft semi-realistic painterly comic style, pencil lines, watercolor wash. Leave clean upper-left caption space. No readable text, no logos, no modern devices."
+  },
+  {
+    "id": "p008",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "The son repeatedly swallows his words in different calling places.",
+    "prompt_zh": "2006年大学夜晚，儿子在宿舍楼下、小卖部门口、电话亭里打电话的记忆重叠成一个画面。他握着硬币和电话卡，表情有很多话没说出口。蓝灰夜色和小卖部暖光对比。",
+    "prompt": "Create a vertical 9:16 nostalgic Chinese comic illustration of a 2006 university campus at night. Blend three memories into one coherent scene without hard panels: the young freshman at a grocery-store public phone, near dorm stairs, and beside a street phone booth. He holds coins and a long-distance phone card, his expression full of words he does not say. Blue-gray campus evening, warm shop light, concrete walls, old dorm building. Soft semi-realistic painterly comic style, pencil linework, watercolor texture, cinematic loneliness. Leave clean upper-left caption space. No readable text, no logo, no watermark, no smartphone."
+  },
+  {
+    "id": "p009",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "Winter turning point: he does not hang up after five rings.",
+    "prompt_zh": "冬夜电话亭。儿子穿薄外套和围巾，握着听筒，玻璃上有雾气，窗外冷蓝色。他没有在第五声后挂断，手边有硬币。孤独、克制、马上要破防。",
+    "prompt": "Create a vertical 9:16 nostalgic Chinese comic illustration set in a cold winter night public phone booth in 2006. The young college freshman wears a thin coat and scarf, gripping the receiver tightly. Frosted or fogged glass, blue-gray night outside, a few coins on the ledge, long-distance phone card nearby. He hesitates and does not hang up after the fifth ring. Tight emotional close-up through the booth glass, lonely and vulnerable but restrained. Soft semi-realistic painterly comic style, pencil lines, watercolor wash. Leave clean upper-left caption space. No readable text, no logos, no smartphone."
+  },
+  {
+    "id": "p010",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "The sixth ring: mother answers immediately.",
+    "prompt_zh": "老家夜晚，第六声响起，妈妈立刻抓起听筒。她的表情又怕又急又心疼。桌上还有没择完的菜、半织的毛衣、旧挂钟，说明她一直在等。",
+    "prompt": "Create a vertical 9:16 nostalgic Chinese comic illustration in a modest 2006 home at night. The sixth ring has just happened; the mother instantly grabs the landline receiver. Her expression is alert, afraid, and tender at once. Unfinished vegetables in a basin, a half-folded or half-knitted sweater, old wall clock, warm light, dark window. Slight motion blur in her hand, dynamic diagonal from ringing phone to her face. Soft semi-realistic painterly comic style, pencil lines, watercolor wash. Leave clean upper-left caption space. No readable text, no logo, no watermark, no smartphone."
+  },
+  {
+    "id": "p011",
+    "provider": "gpt-image",
+    "count": 1,
+    "reference_image": null,
+    "image_to_image": false,
+    "panel_intent": "Ending: she lets him talk without counting rings.",
+    "prompt_zh": "结尾。一个画面里并置两个空间：冷蓝电话亭里的儿子握着听筒眼眶湿润，暖黄灯下的妈妈坐在座机旁微笑倾听。电话线像细线连接两边。不要分格，温柔克制。",
+    "prompt": "Create a vertical 9:16 cinematic nostalgic Chinese comic illustration combining two spaces without hard panel borders. In a cold blue 2006 public phone booth, the young college freshman holds the receiver with wet eyes, finally speaking. In a warm modest home, his mother sits beside the cream-colored landline under a yellow bulb, listening with a gentle relieved smile. A thin telephone cord or light thread visually connects them. Emotional release, home, unconditional love, restrained and not melodramatic. Soft semi-realistic painterly comic style, pencil linework, watercolor wash, paper texture. Leave clean upper-left caption space. No readable text, no logo, no watermark, no smartphone."
+  }
+]

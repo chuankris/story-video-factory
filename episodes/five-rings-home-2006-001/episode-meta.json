@@ -1,0 +1,31 @@
+﻿{
+  "episode_id": "five-rings-home-2006-001",
+  "title": "响五声就好",
+  "production_mode": "pure_comic",
+  "draft_mode": false,
+  "status": "published",
+  "target_panel_count": 11,
+  "era": "2006 China",
+  "theme": "母子亲情、离家上大学、长途电话、克制的想念",
+  "provider_plan": {
+    "style_anchor": "gpt-image",
+    "production_panels": "gpt-image",
+    "caption_style": "douyin-msyh-top",
+    "notes": "GPT-image was used for cover and all production panels. MiniMax was not used in the final published run. Captions were rendered locally with Microsoft YaHei top safe-zone style."
+  },
+  "jimeng_budget": {"max_prompts": 0, "candidates_per_panel": 0},
+  "gpt_image_budget": {"planned_max_images": 14, "actual_images": 13},
+  "minimax_budget": {"tts": false, "video": false, "image_side_tests": 0},
+  "review_gates": {
+    "outline": "approved",
+    "comic_script": "approved",
+    "visual_bible": "approved",
+    "final_assets": "approved",
+    "published": "done"
+  },
+  "outputs": {
+    "publish_carousel": "output/publish/carousel/",
+    "qc_report": "output/qc-report.md",
+    "publish_pack": "output/publish/pack.md"
+  }
+}

@@ -1,0 +1,92 @@
+﻿{
+  "panels": [
+    {
+      "id": "p001",
+      "caption_source": "script.json",
+      "panel_intent": "Opening hook: the mother never answers, creating curiosity.",
+      "visual": "A dim 2006 rural home interior at night. A cream-colored landline telephone rings on a small wooden table. The mother stands beside it, hand hovering above the receiver, not picking up. Wall calendar, enamel cup, old thermos, warm tungsten light.",
+      "composition": "Vertical 9:16, telephone and mother's hand in foreground, mother's restrained face in midground, empty quiet room around her.",
+      "emotion": "quiet restraint, suspense, tenderness"
+    },
+    {
+      "id": "p002",
+      "caption_source": "script.json",
+      "panel_intent": "Show the son's first departure for university and the modest family condition.",
+      "visual": "A 2006 university dormitory arrival scene. The son carries a patched canvas suitcase and a new folded quilt cover. In his hand is a thin long-distance phone card. Iron bunk beds, enamel washbasin, mosquito net, old backpacks.",
+      "composition": "Low angle near suitcase, son small but hopeful, dorm room busy but not crowded.",
+      "emotion": "nervous independence, humble hope"
+    },
+    {
+      "id": "p003",
+      "caption_source": "script.json",
+      "panel_intent": "Establish the weekly Friday 7 PM agreement.",
+      "visual": "Train station platform in late summer 2006. Mother adjusts the son's collar and quietly explains the phone rule. The son listens with a backpack and suitcase. Old green train in background, handwritten luggage tags, warm dusty sunlight.",
+      "composition": "Mother and son close together, platform crowd blurred, a wall clock hints near seven o'clock as a motif.",
+      "emotion": "separation, practical tenderness"
+    },
+    {
+      "id": "p004",
+      "caption_source": "script.json",
+      "panel_intent": "Explain five rings means safe, no need to answer.",
+      "visual": "Split-feeling single scene without comic borders: on one side the son uses a public campus phone with a phone card; on the other side, imagined through telephone-line-like composition, the home landline rings while mother watches but does not answer.",
+      "composition": "One continuous vertical illustration connected by a curling telephone cord motif, no hard panel borders.",
+      "emotion": "clever rule, thrift, mutual understanding"
+    },
+    {
+      "id": "p005",
+      "caption_source": "script.json",
+      "panel_intent": "Clarify emergency rules: if she answers or he keeps ringing, someone needs help.",
+      "visual": "Close-up of mother's hand writing the rule on the back of an old calendar page: five rings are enough. Beside it are a pencil, phone bill, coins, and a small bowl of vegetables. Son's packed bag is visible near the door.",
+      "composition": "Tabletop still life, mother's hand and rule as emotional center; final caption will carry story text.",
+      "emotion": "ritual being made, poor but careful love"
+    },
+    {
+      "id": "p006",
+      "caption_source": "script.json",
+      "panel_intent": "Show mother's weekly waiting ritual.",
+      "visual": "Several Friday evenings suggested in one continuous image: wall calendar pages, the same landline, mother standing beside it in different aprons, counting silently with her fingers. Seasonal vegetables and changing window light imply time passing.",
+      "composition": "Layered memory montage, but still one coherent illustration, phone remains central.",
+      "emotion": "waiting, habit, contained worry"
+    },
+    {
+      "id": "p007",
+      "caption_source": "script.json",
+      "panel_intent": "The fifth ring stops and mother relaxes.",
+      "visual": "Mother in a modest kitchen-living room, telephone now silent. She exhales softly and returns to picking green beans in a basin. Warm light on her face, dark window outside.",
+      "composition": "Phone in upper side, mother's lowered shoulders and hands in foreground, quiet negative space for caption.",
+      "emotion": "relief, ordinary love"
+    },
+    {
+      "id": "p008",
+      "caption_source": "script.json",
+      "panel_intent": "Show the son swallowing his words across different calling places.",
+      "visual": "2006 campus night. The son stands at a small grocery store public phone, another memory of him near dorm stairs, another near a street phone booth, all blended as one lonely composition. He holds coins and a phone card, words unsaid in his expression.",
+      "composition": "Blue-gray campus evening, warm shop light, son repeated subtly as memory echoes; no comic panels.",
+      "emotion": "homesickness held back, thrift, youth"
+    },
+    {
+      "id": "p009",
+      "caption_source": "script.json",
+      "panel_intent": "Winter turning point: five rings pass and the phone keeps ringing.",
+      "visual": "Cold winter night in a public phone booth. The son stands with scarf and thin coat, hand gripping receiver, frost outside, coins on the ledge. He hesitates, not hanging up after the fifth ring.",
+      "composition": "Tight emotional close-up through fogged glass, telephone booth frame creates isolation.",
+      "emotion": "breaking point, loneliness, vulnerability"
+    },
+    {
+      "id": "p010",
+      "caption_source": "script.json",
+      "panel_intent": "The sixth ring: mother answers immediately.",
+      "visual": "At home, mother grabs the landline receiver the instant it rings again. Her expression is alert, afraid, and relieved at once. Unfinished vegetables, half-folded sweater, and old wall clock show she had been waiting.",
+      "composition": "Dynamic diagonal from ringing phone to mother's face, hand movement slightly blurred, warm interior against dark window.",
+      "emotion": "instant maternal response, fear, love"
+    },
+    {
+      "id": "p011",
+      "caption_source": "script.json",
+      "panel_intent": "Ending: the mother lets him talk without counting rings.",
+      "visual": "Parallel emotional scene: son inside cold phone booth holding the receiver with wet eyes, mother sitting beside the home landline under warm light, listening with a gentle smile. The telephone cord visually connects the two spaces like a thin thread.",
+      "composition": "Cinematic vertical composition, cold blue phone booth below/right and warm home above/left, no panel borders, generous clean caption area.",
+      "emotion": "release, home, unconditional love"
+    }
+  ]
+}
